@@ -1,6 +1,6 @@
 package config
 
-// MySQL MySQL配置
+// Mysql  MySQL配置
 type Mysql struct {
 	Host     string `mapstructure:"host" json:"host" yaml:"host"`             // 主机名
 	Port     int    `mapstructure:"port" json:"port" yaml:"port"`             // 端口号

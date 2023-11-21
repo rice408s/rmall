@@ -24,40 +24,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/helloName": {
-            "post": {
-                "description": "测试post",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "Hello, name",
-                "parameters": [
-                    {
-                        "description": "d1",
-                        "name": "test",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/main.test"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/helloworld": {
             "get": {
                 "description": "测试输出hello,world",
@@ -80,18 +46,62 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/v1/user/register": {
+            "post": {
+                "description": "用户注册",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户"
+                ],
+                "parameters": [
+                    {
+                        "description": "注册",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.RegisterReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "注册成功",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
-        "main.test": {
-            "description": "测试",
+        "request.RegisterReq": {
             "type": "object",
+            "required": [
+                "email",
+                "mobile",
+                "password",
+                "username"
+            ],
             "properties": {
-                "d1": {
+                "email": {
                     "type": "string"
                 },
-                "id": {
-                    "type": "integer"
+                "mobile": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
                 }
             }
         }

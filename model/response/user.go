@@ -1,8 +1,9 @@
-package resp
+package response
 
 type LoginResp struct {
-	Token  string `json:"token"`
-	Expire int64  `json:"expire"`
+	Token string `json:"token"`
+	// 过期时间
+	Expire int64 `json:"expire"`
 }
 
 type RegisterResp struct {

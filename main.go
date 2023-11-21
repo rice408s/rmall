@@ -25,8 +25,28 @@ import (
 
 //	@securityDefinitions.basic	BasicAuth
 
+//	func testLogin() {
+//		loginReq := request.LoginReq{
+//			Username: "whw",
+//			Password: "123456",
+//		}
+//		var u *service.UserService
+//		login, i, err := u.Login(&loginReq)
+//		fmt.Println(login, i, err)
+//	}
 func main() {
 	initialize.Run()
+	//testLogin()
+	//err := service.Register(&request.RegisterReq{
+	//	Username: "rice",
+	//	Password: "123456",
+	//	Mobile:   "18582622443",
+	//	Email:    "rice408s@gmail.com",
+	//})
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+
 	//DBtest()
 	//r := router.PingRouter()
 	//r.GET("swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
@@ -77,50 +97,3 @@ type test struct {
 func Helloworld(g *gin.Context) {
 	g.JSON(http.StatusOK, "helloworld")
 }
-
-// HelloName PingExample godoc
-//
-//	@Summary		Hello, name
-//	@Schemes		json
-//	@Description	测试post
-//	@Tags			User
-//	@param			test	body	test	true	"d1"
-//
-// 参数是JSON格式
-//
-//	@Accept			json
-//	@Produce		json
-//	@Success		200	{string}	HelloName
-//	@Router			/api/v1/helloName [post]
-func HelloName(g *gin.Context) {
-	//获取json参数
-	var t test
-	err := g.BindJSON(&t)
-	if err != nil {
-		return
-	}
-	g.JSON(http.StatusOK, "hello,"+t.D1)
-
-}
-
-// DBtest 测试数据库
-//func DBtest() {
-//	db, err := config.InitDB()
-//	if err != nil {
-//		fmt.Println("initialize DB failed, err:", err)
-//		return
-//	}
-//	sqlStr := `select * from test where id = :id`
-//	var t test
-//	query, err := db.NamedQuery(sqlStr, map[string]interface{}{"id": "1"})
-//	if err != nil {
-//		return
-//	}
-//	for query.Next() {
-//		err := query.StructScan(&t)
-//		if err != nil {
-//			fmt.Println(err)
-//		}
-//		fmt.Println(t)
-//	}
-//}

@@ -1,4 +1,4 @@
-package req
+package request
 
 // LoginReq 登陆请求
 type LoginReq struct {

@@ -1,12 +1,20 @@
 basePath: /
 definitions:
-  main.test:
-    description: 测试
+  request.RegisterReq:
     properties:
-      d1:
+      email:
         type: string
-      id:
-        type: integer
+      mobile:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - mobile
+    - password
+    - username
     type: object
 host: localhost:8080
 info:
@@ -22,28 +30,6 @@ info:
   title: swagger Example API
   version: "1.0"
 paths:
-  /api/v1/helloName:
-    post:
-      consumes:
-      - application/json
-      description: 测试post
-      parameters:
-      - description: d1
-        in: body
-        name: test
-        required: true
-        schema:
-          $ref: '#/definitions/main.test'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-      summary: Hello, name
-      tags:
-      - User
   /api/v1/helloworld:
     get:
       consumes:
@@ -59,6 +45,27 @@ paths:
       summary: Hello,world
       tags:
       - User
+  /api/v1/user/register:
+    post:
+      consumes:
+      - application/json
+      description: 用户注册
+      parameters:
+      - description: 注册
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.RegisterReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 注册成功
+          schema:
+            type: string
+      tags:
+      - 用户
 securityDefinitions:
   BasicAuth:
     type: basic
