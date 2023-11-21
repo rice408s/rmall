@@ -1,0 +1,65 @@
+basePath: /
+definitions:
+  main.test:
+    description: 测试
+    properties:
+      d1:
+        type: string
+      id:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: 这是一个描述.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: swagger Example API
+  version: "1.0"
+paths:
+  /api/v1/helloName:
+    post:
+      consumes:
+      - application/json
+      description: 测试post
+      parameters:
+      - description: d1
+        in: body
+        name: test
+        required: true
+        schema:
+          $ref: '#/definitions/main.test'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Hello, name
+      tags:
+      - User
+  /api/v1/helloworld:
+    get:
+      consumes:
+      - application/json
+      description: 测试输出hello,world
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Hello,world
+      tags:
+      - User
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"
