@@ -2,14 +2,19 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/swaggo/files"
+	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"rmall/api/v1"
 	_ "rmall/docs"
+	"rmall/utils"
 )
 
 func Route() {
-	r := gin.Default()
+	r := gin.New()
+
+	r.Use(utils.LoggerMiddleware())
+	r.Use(utils.RecoverMiddleware())
+
 	//swag
 	r.GET("swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	v1 := r.Group("/api/v1")
