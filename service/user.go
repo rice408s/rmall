@@ -22,6 +22,7 @@ func Register(req *request.RegisterReq) (int, error) {
 	//检测用户名是否存在
 	user, err := dao.FindUserByUsername(req.Username)
 	if err != nil && !errors.Is(err, sql.ErrNoRows) {
+		fmt.Println(err)
 		return 0, err
 	}
 

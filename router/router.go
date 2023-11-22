@@ -14,12 +14,15 @@ func Route() {
 	r.GET("swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	v1 := r.Group("/api/v1")
 	{
-		v1.GET("", func(c *gin.Context) {
-			c.JSON(200, gin.H{
-				"message": "pong",
-			})
-		})
 		v1.POST("user/register", api.Register)
+		v1.POST("user/login", api.Login)
+
+		//需要token验证的路由
+		v1.Use(api.AuthRequired())
+		{
+			v1.GET("user/info", api.GetUserInfo)
+		}
+
 	}
 
 	err := r.Run(":8080")

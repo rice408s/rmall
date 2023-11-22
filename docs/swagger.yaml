@@ -1,5 +1,15 @@
 basePath: /
 definitions:
+  request.LoginReq:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
   request.RegisterReq:
     properties:
       email:
@@ -15,6 +25,36 @@ definitions:
     - mobile
     - password
     - username
+    type: object
+  response.LoginResp:
+    properties:
+      expire:
+        description: 过期时间
+        type: integer
+      token:
+        type: string
+    type: object
+  response.RegisterResp:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      mobile:
+        type: string
+      username:
+        type: string
+    type: object
+  response.UserInfo:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      mobile:
+        type: string
+      username:
+        type: string
     type: object
 host: localhost:8080
 info:
@@ -45,6 +85,47 @@ paths:
       summary: Hello,world
       tags:
       - User
+  /api/v1/user/info:
+    get:
+      consumes:
+      - application/json
+      description: 获取用户信息
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取用户信息成功
+          schema:
+            $ref: '#/definitions/response.UserInfo'
+      tags:
+      - 用户
+  /api/v1/user/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户登录
+      parameters:
+      - description: 登录
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.LoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 登录成功
+          schema:
+            $ref: '#/definitions/response.LoginResp'
+      tags:
+      - 用户
   /api/v1/user/register:
     post:
       consumes:
@@ -62,6 +143,10 @@ paths:
       responses:
         "200":
           description: 注册成功
+          schema:
+            $ref: '#/definitions/response.RegisterResp'
+        "500":
+          description: 参数错误
           schema:
             type: string
       tags:

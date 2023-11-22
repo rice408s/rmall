@@ -47,6 +47,70 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/user/info": {
+            "get": {
+                "description": "获取用户信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取用户信息成功",
+                        "schema": {
+                            "$ref": "#/definitions/response.UserInfo"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/login": {
+            "post": {
+                "description": "用户登录",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户"
+                ],
+                "parameters": [
+                    {
+                        "description": "登录",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.LoginReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "登录成功",
+                        "schema": {
+                            "$ref": "#/definitions/response.LoginResp"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/user/register": {
             "post": {
                 "description": "用户注册",
@@ -74,6 +138,12 @@ const docTemplate = `{
                     "200": {
                         "description": "注册成功",
                         "schema": {
+                            "$ref": "#/definitions/response.RegisterResp"
+                        }
+                    },
+                    "500": {
+                        "description": "参数错误",
+                        "schema": {
                             "type": "string"
                         }
                     }
@@ -82,6 +152,21 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "request.LoginReq": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
         "request.RegisterReq": {
             "type": "object",
             "required": [
@@ -98,6 +183,52 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.LoginResp": {
+            "type": "object",
+            "properties": {
+                "expire": {
+                    "description": "过期时间",
+                    "type": "integer"
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.RegisterResp": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "mobile": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.UserInfo": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "mobile": {
                     "type": "string"
                 },
                 "username": {
