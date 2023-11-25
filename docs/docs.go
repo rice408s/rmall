@@ -9,11 +9,10 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
+            "name": "rice408",
+            "url": "http://47.108.226.33/",
+            "email": "hongwei.wang408@gmail.com"
         },
         "license": {
             "name": "Apache 2.0",
@@ -24,30 +23,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/helloworld": {
-            "get": {
-                "description": "测试输出hello,world",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "Hello,world",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/user/info": {
+        "/user/info": {
             "get": {
                 "description": "获取用户信息",
                 "consumes": [
@@ -78,7 +54,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/user/login": {
+        "/user/login": {
             "post": {
                 "description": "用户登录",
                 "consumes": [
@@ -111,7 +87,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/user/register": {
+        "/user/register": {
             "post": {
                 "description": "用户注册",
                 "consumes": [
@@ -248,10 +224,10 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
 	Host:             "localhost:8080",
-	BasePath:         "/",
+	BasePath:         "/api/v1",
 	Schemes:          []string{},
-	Title:            "swagger Example API",
-	Description:      "这是一个描述.",
+	Title:            "商城系统",
+	Description:      "商城系统接口文档",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

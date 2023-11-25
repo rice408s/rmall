@@ -6,15 +6,13 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"rmall/api/v1"
 	_ "rmall/docs"
-	"rmall/utils"
 )
 
 func Route() {
-	r := gin.New()
-
-	r.Use(utils.LoggerMiddleware())
-	r.Use(utils.RecoverMiddleware())
-
+	//r := gin.New()
+	//r.Use(utils.LoggerMiddleware())
+	//r.Use(utils.RecoverMiddleware())
+	r := gin.Default()
 	//swag
 	r.GET("swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	v1 := r.Group("/api/v1")

@@ -12,14 +12,14 @@ import (
 )
 
 // Register @Summary 用户注册
-// @Description 用户注册
-// @Tags 用户
-// @Accept json
-// @Produce json
-// @Param request body request.RegisterReq true "注册"
-// @Success 200 {object} response.RegisterResp "注册成功"
-// @Failure 500 {object} string "参数错误"
-// @Router /api/v1/user/register [post]
+//	@Description	用户注册
+//	@Tags			用户
+//	@Accept			json
+//	@Produce		json
+//	@Param			request	body		request.RegisterReq		true	"注册"
+//	@Success		200		{object}	response.RegisterResp	"注册成功"
+//	@Failure		500		{object}	string					"参数错误"
+//	@Router			/user/register [post]
 func Register(c *gin.Context) {
 
 	var req request.RegisterReq
@@ -50,13 +50,13 @@ func Register(c *gin.Context) {
 }
 
 // Login @Summary 用户登录
-// @Description 用户登录
-// @Tags 用户
-// @Accept json
-// @Produce json
-// @Param request body request.LoginReq true "登录"
-// @Success 200 {object} response.LoginResp "登录成功"
-// @Router /api/v1/user/login [post]
+//	@Description	用户登录
+//	@Tags			用户
+//	@Accept			json
+//	@Produce		json
+//	@Param			request	body		request.LoginReq	true	"登录"
+//	@Success		200		{object}	response.LoginResp	"登录成功"
+//	@Router			/user/login [post]
 func Login(c *gin.Context) {
 	var req request.LoginReq
 	//绑定参数
@@ -105,13 +105,13 @@ func Login(c *gin.Context) {
 }
 
 // GetUserInfo @Summary 获取用户信息
-// @Description 获取用户信息
-// @Tags 用户
-// @Accept json
-// @Produce json
-// @Param Authorization header string true "token"
-// @Success 200 {object} response.UserInfo "获取用户信息成功"
-// @Router /api/v1/user/info [get]
+//	@Description	获取用户信息
+//	@Tags			用户
+//	@Accept			json
+//	@Produce		json
+//	@Param			Authorization	header		string				true	"token"
+//	@Success		200				{object}	response.UserInfo	"获取用户信息成功"
+//	@Router			/user/info [get]
 func GetUserInfo(c *gin.Context) {
 	user, _ := c.Get("user")
 	claims := user.(jwt.MapClaims)

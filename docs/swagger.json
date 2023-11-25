@@ -1,13 +1,12 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "这是一个描述.",
-        "title": "swagger Example API",
-        "termsOfService": "http://swagger.io/terms/",
+        "description": "商城系统接口文档",
+        "title": "商城系统",
         "contact": {
-            "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
+            "name": "rice408",
+            "url": "http://47.108.226.33/",
+            "email": "hongwei.wang408@gmail.com"
         },
         "license": {
             "name": "Apache 2.0",
@@ -16,32 +15,9 @@
         "version": "1.0"
     },
     "host": "localhost:8080",
-    "basePath": "/",
+    "basePath": "/api/v1",
     "paths": {
-        "/api/v1/helloworld": {
-            "get": {
-                "description": "测试输出hello,world",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "User"
-                ],
-                "summary": "Hello,world",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/user/info": {
+        "/user/info": {
             "get": {
                 "description": "获取用户信息",
                 "consumes": [
@@ -72,7 +48,7 @@
                 }
             }
         },
-        "/api/v1/user/login": {
+        "/user/login": {
             "post": {
                 "description": "用户登录",
                 "consumes": [
@@ -105,7 +81,7 @@
                 }
             }
         },
-        "/api/v1/user/register": {
+        "/user/register": {
             "post": {
                 "description": "用户注册",
                 "consumes": [

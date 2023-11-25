@@ -2,6 +2,7 @@ package api
 
 import (
 	"net/http"
+	"rmall/global"
 	"strings"
 
 	"github.com/dgrijalva/jwt-go"
@@ -15,7 +16,7 @@ func AuthRequired() gin.HandlerFunc {
 		tokenString = strings.TrimPrefix(tokenString, "Bearer ")
 		claims := jwt.MapClaims{}
 		token, err := jwt.ParseWithClaims(tokenString, &claims, func(token *jwt.Token) (interface{}, error) {
-			return []byte("secret"), nil
+			return []byte(global.Config.JWT.SecretKey), nil
 		})
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{

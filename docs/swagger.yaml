@@ -1,4 +1,4 @@
-basePath: /
+basePath: /api/v1
 definitions:
   request.LoginReq:
     properties:
@@ -59,33 +59,17 @@ definitions:
 host: localhost:8080
 info:
   contact:
-    email: support@swagger.io
-    name: API Support
-    url: http://www.swagger.io/support
-  description: 这是一个描述.
+    email: hongwei.wang408@gmail.com
+    name: rice408
+    url: http://47.108.226.33/
+  description: 商城系统接口文档
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
-  title: swagger Example API
+  title: 商城系统
   version: "1.0"
 paths:
-  /api/v1/helloworld:
-    get:
-      consumes:
-      - application/json
-      description: 测试输出hello,world
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: string
-      summary: Hello,world
-      tags:
-      - User
-  /api/v1/user/info:
+  /user/info:
     get:
       consumes:
       - application/json
@@ -105,7 +89,7 @@ paths:
             $ref: '#/definitions/response.UserInfo'
       tags:
       - 用户
-  /api/v1/user/login:
+  /user/login:
     post:
       consumes:
       - application/json
@@ -126,7 +110,7 @@ paths:
             $ref: '#/definitions/response.LoginResp'
       tags:
       - 用户
-  /api/v1/user/register:
+  /user/register:
     post:
       consumes:
       - application/json

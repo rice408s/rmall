@@ -5,3 +5,9 @@ mysql:
   password: "123456"
   dbname: "rmall"
   params: "charset=utf8mb4&parseTime=True"
+
+
+
+jwt:
+  secret_key: "da43ujuvskzap4qk"
+  expire: 259200
