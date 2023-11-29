@@ -62,7 +62,7 @@ func UserLogin(req *request.UserLoginReq) (string, int64, error) {
 		return "", 0, errors.New("密码错误")
 	}
 
-	token, expire, err := utils.CreateToken(user)
+	token, expire, err := utils.CreateUserToken(user)
 	if err != nil {
 		return "", 0, err
 	}

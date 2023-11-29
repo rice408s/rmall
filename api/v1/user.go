@@ -17,7 +17,7 @@ import (
 //	@Produce		json
 //	@Param			request	body		request.UserRegisterReq		true	"注册"
 //	@Success		200		{object}	response.UserRegisterResp	"注册成功"
-//	@Failure		500		{object}	string					"参数错误"
+//	@Failure		500		{object}	string						"参数错误"
 //	@Router			/user/register [post]
 func UserRegister(c *gin.Context) {
 
@@ -105,12 +105,11 @@ func UserLogin(c *gin.Context) {
 func GetUserInfo(c *gin.Context) {
 	claims, _ := c.Get("user")
 	userClaims := claims.(jwt.MapClaims)
-	userInfo := userClaims["user"].(map[string]interface{})
 
 	c.JSON(http.StatusOK, response.UserInfo{
-		Id:       int(userInfo["id"].(float64)),
-		Username: userInfo["username"].(string),
-		Mobile:   userInfo["mobile"].(string),
-		Email:    userInfo["email"].(string),
+		Id:       int(userClaims["id"].(float64)),
+		Username: userClaims["username"].(string),
+		Mobile:   userClaims["mobile"].(string),
+		Email:    userClaims["email"].(string),
 	})
 }

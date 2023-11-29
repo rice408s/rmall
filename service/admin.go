@@ -61,5 +61,5 @@ func AdminLogin(req *request.AdminLoginReq) (string, int64, error) {
 		return "", 0, errors.New("密码错误")
 	}
 	// 生成token
-	return utils.CreateToken(admin)
+	return utils.CreateAdminToken(admin)
 }

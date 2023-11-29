@@ -17,22 +17,40 @@ func Route() {
 	r.GET("swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	v1 := r.Group("/api/v1")
 	{
+		//用户相关
 		user := v1.Group("/user")
 		{
 			user.POST("/register", api.UserRegister)
 			user.POST("/login", api.UserLogin)
 		}
 
+		//管理员相关
 		admin := v1.Group("/admin")
 		{
 			admin.POST("/register", api.AdminRegister)
 			admin.POST("/login", api.AdminLogin)
 		}
+
 		//需要token验证的路由
-		v1.Use(api.AuthRequired())
+		userRequired := v1.Group("/user")
+		userRequired.Use(api.UserAuthRequired())
 		{
-			v1.GET("user/info", api.GetUserInfo)
-			v1.GET("admin/info", api.GetAdminInfo)
+			userRequired.GET("/info", api.GetUserInfo)
+		}
+
+		//需要token验证的路由
+		adminRequired := v1.Group("/admin")
+		adminRequired.Use(api.AdminAuthRequired())
+		{
+			adminRequired.GET("/info", api.GetAdminInfo)
+		}
+
+		role := adminRequired.Group("/role")
+		{
+			role.POST("/add", api.AddRole)
+			role.POST("/update", api.UpdateRole)
+			role.POST("/delete", api.DeleteRole)
+			role.GET("/list", api.GetRoleList)
 		}
 
 	}

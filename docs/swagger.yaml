@@ -1,6 +1,20 @@
 basePath: /api/v1
 definitions:
-  request.LoginReq:
+  model.Role:
+    properties:
+      id:
+        type: integer
+      role_name:
+        type: string
+    type: object
+  request.AddRoleReq:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  request.AdminLoginReq:
     properties:
       password:
         type: string
@@ -10,7 +24,7 @@ definitions:
     - password
     - username
     type: object
-  request.RegisterReq:
+  request.AdminRegisterReq:
     properties:
       email:
         type: string
@@ -26,15 +40,55 @@ definitions:
     - password
     - username
     type: object
-  response.LoginResp:
+  request.DeleteRoleReq:
     properties:
-      expire:
-        description: 过期时间
+      id:
         type: integer
-      token:
-        type: string
+    required:
+    - id
     type: object
-  response.RegisterResp:
+  request.UpdateRoleReq:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    required:
+    - id
+    - name
+    type: object
+  request.UserLoginReq:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  request.UserRegisterReq:
+    properties:
+      email:
+        type: string
+      mobile:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - email
+    - mobile
+    - password
+    - username
+    type: object
+  response.AddRoleResp:
+    properties:
+      id:
+        type: integer
+    type: object
+  response.AdminInfo:
     properties:
       email:
         type: string
@@ -45,7 +99,53 @@ definitions:
       username:
         type: string
     type: object
-  response.UserInfo:
+  response.AdminLoginResp:
+    properties:
+      expire:
+        description: 过期时间
+        type: integer
+      token:
+        type: string
+    type: object
+  response.AdminRegisterResp:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      mobile:
+        type: string
+      username:
+        type: string
+    type: object
+  response.DeleteRoleResp:
+    properties:
+      id:
+        type: integer
+    type: object
+  response.GetRoleListResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/model.Role'
+        type: array
+      total:
+        type: integer
+    type: object
+  response.UpdateRoleResp:
+    properties:
+      id:
+        type: integer
+    type: object
+  response.UserLoginResp:
+    properties:
+      expire:
+        description: 过期时间
+        type: integer
+      token:
+        type: string
+    type: object
+  response.UserRegisterResp:
     properties:
       email:
         type: string
@@ -69,26 +169,158 @@ info:
   title: 商城系统
   version: "1.0"
 paths:
-  /user/info:
+  /admin/info:
     get:
       consumes:
       - application/json
-      description: 获取用户信息
+      description: 管理员信息
       parameters:
       - description: token
         in: header
-        name: Authorization
+        name: token
         required: true
         type: string
       produces:
       - application/json
       responses:
         "200":
-          description: 获取用户信息成功
+          description: OK
           schema:
-            $ref: '#/definitions/response.UserInfo'
+            $ref: '#/definitions/response.AdminInfo'
       tags:
-      - 用户
+      - 管理员
+  /admin/login:
+    post:
+      consumes:
+      - application/json
+      description: 管理员登录
+      parameters:
+      - description: 登录
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.AdminLoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AdminLoginResp'
+      tags:
+      - 管理员
+  /admin/register:
+    post:
+      consumes:
+      - application/json
+      description: 管理员注册
+      parameters:
+      - description: 注册
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.AdminRegisterReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.AdminRegisterResp'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      tags:
+      - 管理员
+  /role/add:
+    post:
+      consumes:
+      - application/json
+      description: 添加角色
+      parameters:
+      - description: 添加角色
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.AddRoleReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 添加成功
+          schema:
+            $ref: '#/definitions/response.AddRoleResp'
+      tags:
+      - 角色
+  /role/delete:
+    post:
+      consumes:
+      - application/json
+      description: 删除角色
+      parameters:
+      - description: 角色id
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.DeleteRoleReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除成功
+          schema:
+            $ref: '#/definitions/response.DeleteRoleResp'
+      summary: 删除角色
+      tags:
+      - 角色
+  /role/list:
+    get:
+      consumes:
+      - application/json
+      description: 查询角色列表
+      parameters:
+      - in: query
+        name: page_num
+        type: integer
+      - in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 查询成功
+          schema:
+            $ref: '#/definitions/response.GetRoleListResp'
+      summary: 查询角色列表
+      tags:
+      - 角色
+  /role/update:
+    post:
+      consumes:
+      - application/json
+      description: 更新角色
+      parameters:
+      - description: 更新角色
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateRoleReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新成功
+          schema:
+            $ref: '#/definitions/response.UpdateRoleResp'
+      tags:
+      - 角色
   /user/login:
     post:
       consumes:
@@ -100,14 +332,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/request.LoginReq'
+          $ref: '#/definitions/request.UserLoginReq'
       produces:
       - application/json
       responses:
         "200":
           description: 登录成功
           schema:
-            $ref: '#/definitions/response.LoginResp'
+            $ref: '#/definitions/response.UserLoginResp'
       tags:
       - 用户
   /user/register:
@@ -121,14 +353,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/request.RegisterReq'
+          $ref: '#/definitions/request.UserRegisterReq'
       produces:
       - application/json
       responses:
         "200":
           description: 注册成功
           schema:
-            $ref: '#/definitions/response.RegisterResp'
+            $ref: '#/definitions/response.UserRegisterResp'
         "500":
           description: 参数错误
           schema:

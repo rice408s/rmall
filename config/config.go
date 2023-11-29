@@ -20,3 +20,5 @@ type JWT struct {
 	SecretKey string `mapstructure:"secret-key" json:"secretKey" yaml:"secret_key"` // 密钥
 	Expire    int64  `mapstructure:"expire" json:"expire" yaml:"expire"`            // 过期时间
 }
+
+// DefaultConfig 默认配置

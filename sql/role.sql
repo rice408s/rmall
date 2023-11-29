@@ -1,4 +1,6 @@
-CREATE TABLE Role (
-                      Id INT PRIMARY KEY AUTO_INCREMENT NOT NULL ,
-                      Name VARCHAR(50) comment '角色名称'
-);
+CREATE TABLE `role` (
+                        `id` INT NOT NULL AUTO_INCREMENT,
+                        `role_name` VARCHAR(100) NOT NULL,
+                        PRIMARY KEY (`id`),
+                        UNIQUE INDEX `role_name_UNIQUE` (`role_name` ASC) VISIBLE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';

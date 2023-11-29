@@ -15,8 +15,8 @@ import (
 //	@Tags			管理员
 //	@Accept			json
 //	@Produce		json
-//	@Param			request	body		request.AdminRegisterReq
-//	@Success		200		{object}	response.UserRegisterResp
+//	@Param			request	body		request.AdminRegisterReq	true	"注册"
+//	@Success		200		{object}	response.AdminRegisterResp
 //	@Failure		500		{object}	string
 //	@Router			/admin/register [post]
 func AdminRegister(c *gin.Context) {
@@ -52,7 +52,7 @@ func AdminRegister(c *gin.Context) {
 //	@Tags			管理员
 //	@Accept			json
 //	@Produce		json
-//	@Param			request	body		request.AdminLoginReq
+//	@Param			request	body		request.AdminLoginReq true	"登录"
 //	@Success		200		{object}	response.AdminLoginResp
 //	@Router			/admin/login [post]
 func AdminLogin(c *gin.Context) {
@@ -86,18 +86,17 @@ func AdminLogin(c *gin.Context) {
 //	@Tags			管理员
 //	@Accept			json
 //	@Produce		json
-//	@Param			token	header		string		true	"token"
+//	@Param			token	header		string	true	"token"
 //	@Success		200		{object}	response.AdminInfo
 //	@Router			/admin/info [get]
 func GetAdminInfo(c *gin.Context) {
-	claims, _ := c.Get("user")
-	userClaims := claims.(jwt.MapClaims)
-	adminInfo := userClaims["user"].(map[string]interface{})
+	claims, _ := c.Get("admin")
+	adminClaims := claims.(jwt.MapClaims)
 
 	c.JSON(http.StatusOK, response.AdminInfo{
-		Id:       int(adminInfo["id"].(float64)),
-		Username: adminInfo["username"].(string),
-		Mobile:   adminInfo["mobile"].(string),
-		Email:    adminInfo["email"].(string),
+		Id:       int(adminClaims["id"].(float64)),
+		Username: adminClaims["username"].(string),
+		Mobile:   adminClaims["mobile"].(string),
+		Email:    adminClaims["email"].(string),
 	})
 }

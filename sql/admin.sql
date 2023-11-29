@@ -1,4 +1,4 @@
-CREATE TABLE Admin
+CREATE TABLE admin
 (
     id         INT PRIMARY KEY AUTO_INCREMENT,
     username   VARCHAR(50)  NOT NULL comment '用户名', -- unique
