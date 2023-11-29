@@ -17,13 +17,22 @@ func Route() {
 	r.GET("swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	v1 := r.Group("/api/v1")
 	{
-		v1.POST("user/register", api.Register)
-		v1.POST("user/login", api.Login)
+		user := v1.Group("/user")
+		{
+			user.POST("/register", api.UserRegister)
+			user.POST("/login", api.UserLogin)
+		}
 
+		admin := v1.Group("/admin")
+		{
+			admin.POST("/register", api.AdminRegister)
+			admin.POST("/login", api.AdminLogin)
+		}
 		//需要token验证的路由
 		v1.Use(api.AuthRequired())
 		{
 			v1.GET("user/info", api.GetUserInfo)
+			v1.GET("admin/info", api.GetAdminInfo)
 		}
 
 	}

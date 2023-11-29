@@ -11,9 +11,8 @@ import (
 	"time"
 )
 
-// Register 用户注册
-func Register(req *request.RegisterReq) (int, error) {
-	fmt.Println("hello")
+// UserRegister 用户注册
+func UserRegister(req *request.UserRegisterReq) (int, error) {
 	// 参数校验
 	if req.Username == "" || req.Password == "" || req.Mobile == "" || req.Email == "" {
 		return 0, errors.New("参数错误")
@@ -48,7 +47,7 @@ func Register(req *request.RegisterReq) (int, error) {
 
 }
 
-func Login(req *request.LoginReq) (string, int64, error) {
+func UserLogin(req *request.UserLoginReq) (string, int64, error) {
 	// 参数校验
 	if req.Username == "" || req.Password == "" {
 		return "", 0, errors.New("参数错误")

@@ -9,10 +9,12 @@ import (
 )
 
 func InitCasbin() {
+	//初始化casbin
 	a, err := sqlxadapter.NewAdapter(global.Db, "casbin_rule")
 	if err != nil {
 		panic(err)
 	}
+	//加载策略
 	e, err := casbin.NewEnforcer("casbin_model.conf", a)
 	if err != nil {
 		panic(err)
@@ -21,6 +23,7 @@ func InitCasbin() {
 		log.Println("casbin.LoadPolicy failed,err:", err)
 	}
 
+	//检测权限
 	has, err := e.Enforce("alice", "data1", "read")
 	if err != nil {
 		log.Println("Enforce failed, err: ", err)
