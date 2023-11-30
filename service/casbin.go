@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"rmall/global"
 	"rmall/model/request"
 )
@@ -17,6 +18,7 @@ func RemovePolicy(req *request.RemovePolicyReq) (bool, error) {
 func UpdatePolicy(req *request.UpdatePolicyReq) (bool, error) {
 	oldPolicy := []string{req.OldV0, req.OldV1, req.OldV2}
 	newPolicy := []string{req.NewV0, req.NewV1, req.NewV2}
+	fmt.Println(oldPolicy, newPolicy)
 	return global.E.UpdatePolicy(oldPolicy, newPolicy)
 }
 

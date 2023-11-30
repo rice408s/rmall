@@ -40,9 +40,14 @@ func Route() {
 
 		//需要token验证的路由
 		adminRequired := v1.Group("/admin")
-		adminRequired.Use(api.AdminAuthRequired())
+		adminRequired.Use(api.AdminAuthRequired(), api.CasbinMiddleware())
 		{
 			adminRequired.GET("/info", api.GetAdminInfo)
+			//casbin相关
+			adminRequired.POST("/policy/add", api.AddPolicy)
+			adminRequired.POST("/policy/remove", api.RemovePolicy)
+			adminRequired.POST("/policy/update", api.UpdatePolicy)
+			adminRequired.GET("/policy/list", api.GetPolicyList)
 		}
 
 		role := adminRequired.Group("/role")

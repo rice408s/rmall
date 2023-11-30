@@ -11,6 +11,7 @@ import (
 
 // UserRegister @Summary 用户注册
 //
+//	@summary		用户注册
 //	@Description	用户注册
 //	@Tags			用户
 //	@Accept			json
@@ -50,6 +51,7 @@ func UserRegister(c *gin.Context) {
 
 // UserLogin @Summary 用户登录
 //
+//	@summary		用户登录
 //	@Description	用户登录
 //	@Tags			用户
 //	@Accept			json

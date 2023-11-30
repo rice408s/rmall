@@ -65,3 +65,54 @@ func AdminAuthRequired() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+func CasbinMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// 获取请求的URI和方法
+		obj := c.Request.URL.RequestURI()
+		act := c.Request.Method
+
+		// 获取用户的角色
+		claims, _ := c.Get("admin")
+		userClaims := claims.(jwt.MapClaims)
+		//获取用户名
+		username := userClaims["username"].(string)
+		//获取用户角色
+		roles, err := global.E.GetRolesForUser(username)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": "error occurred while getting the roles for the user",
+			})
+			c.Abort()
+			return
+		}
+		// 检查每个角色的策略
+		allowed := false
+		for _, role := range roles {
+			ok, err := global.E.Enforce(role, obj, act)
+			if err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"message": "error occurred while checking the policy",
+				})
+				c.Abort()
+				return
+			}
+			if ok {
+				allowed = true
+				break
+			}
+		}
+
+		// 如果策略不允许，返回403错误
+		if !allowed {
+			c.JSON(http.StatusForbidden, gin.H{
+				"message": "forbidden",
+			})
+			c.Abort()
+			return
+		}
+
+		// 如果策略允许，继续处理请求
+		c.Next()
+	}
+}

@@ -10,7 +10,7 @@ import (
 )
 
 // AdminRegister @Summary 管理员注册
-//
+//	@summary		管理员注册
 //	@Description	管理员注册
 //	@Tags			管理员
 //	@Accept			json
@@ -47,12 +47,12 @@ func AdminRegister(c *gin.Context) {
 }
 
 // AdminLogin @Summary 管理员登录
-//
+//	@summary		管理员登录
 //	@Description	管理员登录
 //	@Tags			管理员
 //	@Accept			json
 //	@Produce		json
-//	@Param			request	body		request.AdminLoginReq true	"登录"
+//	@Param			request	body		request.AdminLoginReq	true	"登录"
 //	@Success		200		{object}	response.AdminLoginResp
 //	@Router			/admin/login [post]
 func AdminLogin(c *gin.Context) {
@@ -81,7 +81,7 @@ func AdminLogin(c *gin.Context) {
 }
 
 // GetAdminInfo @Summary 管理员信息
-//
+//	@summary		管理员信息
 //	@Description	管理员信息
 //	@Tags			管理员
 //	@Accept			json

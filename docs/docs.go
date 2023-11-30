@@ -23,6 +23,108 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/admin/casbin/add": {
+            "post": {
+                "description": "添加策略",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "策略管理"
+                ],
+                "summary": "添加策略",
+                "parameters": [
+                    {
+                        "description": "添加策略",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AddPolicyReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"添加成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/casbin/remove": {
+            "post": {
+                "description": "删除策略",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "策略管理"
+                ],
+                "summary": "删除策略",
+                "parameters": [
+                    {
+                        "description": "删除策略",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.RemovePolicyReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"删除成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/casbin/update": {
+            "post": {
+                "description": "修改策略",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "策略管理"
+                ],
+                "summary": "修改策略",
+                "parameters": [
+                    {
+                        "description": "修改策略",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdatePolicyReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"修改成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/info": {
             "get": {
                 "description": "管理员信息",
@@ -35,6 +137,7 @@ const docTemplate = `{
                 "tags": [
                     "管理员"
                 ],
+                "summary": "管理员信息",
                 "parameters": [
                     {
                         "type": "string",
@@ -66,6 +169,7 @@ const docTemplate = `{
                 "tags": [
                     "管理员"
                 ],
+                "summary": "管理员登录",
                 "parameters": [
                     {
                         "description": "登录",
@@ -99,6 +203,7 @@ const docTemplate = `{
                 "tags": [
                     "管理员"
                 ],
+                "summary": "管理员注册",
                 "parameters": [
                     {
                         "description": "注册",
@@ -138,6 +243,7 @@ const docTemplate = `{
                 "tags": [
                     "角色"
                 ],
+                "summary": "添加角色",
                 "parameters": [
                     {
                         "description": "添加角色",
@@ -240,6 +346,7 @@ const docTemplate = `{
                 "tags": [
                     "角色"
                 ],
+                "summary": "更新角色",
                 "parameters": [
                     {
                         "description": "更新角色",
@@ -273,6 +380,7 @@ const docTemplate = `{
                 "tags": [
                     "用户"
                 ],
+                "summary": "用户登录",
                 "parameters": [
                     {
                         "description": "登录",
@@ -306,6 +414,7 @@ const docTemplate = `{
                 "tags": [
                     "用户"
                 ],
+                "summary": "用户注册",
                 "parameters": [
                     {
                         "description": "注册",
@@ -342,6 +451,24 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "role_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.AddPolicyReq": {
+            "type": "object",
+            "required": [
+                "v0",
+                "v1"
+            ],
+            "properties": {
+                "v0": {
+                    "type": "string"
+                },
+                "v1": {
+                    "type": "string"
+                },
+                "v2": {
                     "type": "string"
                 }
             }
@@ -403,6 +530,53 @@ const docTemplate = `{
             "properties": {
                 "id": {
                     "type": "integer"
+                }
+            }
+        },
+        "request.RemovePolicyReq": {
+            "type": "object",
+            "required": [
+                "v0",
+                "v1"
+            ],
+            "properties": {
+                "v0": {
+                    "type": "string"
+                },
+                "v1": {
+                    "type": "string"
+                },
+                "v2": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.UpdatePolicyReq": {
+            "type": "object",
+            "required": [
+                "new_v0",
+                "new_v1",
+                "old_v0",
+                "old_v1"
+            ],
+            "properties": {
+                "new_v0": {
+                    "type": "string"
+                },
+                "new_v1": {
+                    "type": "string"
+                },
+                "new_v2": {
+                    "type": "string"
+                },
+                "old_v0": {
+                    "type": "string"
+                },
+                "old_v1": {
+                    "type": "string"
+                },
+                "old_v2": {
+                    "type": "string"
                 }
             }
         },

@@ -9,8 +9,9 @@ import (
 	"rmall/service"
 )
 
-// AddRole @Summary AddRole
+// AddRole
 //
+//	@Summary		添加角色
 //	@Description	添加角色
 //	@Tags			角色
 //	@Accept			json
@@ -40,6 +41,7 @@ func AddRole(c *gin.Context) {
 
 // UpdateRole @Summary UpdateRole
 //
+//	@summary		更新角色
 //	@Description	更新角色
 //	@Tags			角色
 //	@Accept			json
@@ -74,8 +76,8 @@ func UpdateRole(c *gin.Context) {
 //	@Tags			角色
 //	@Accept			json
 //	@Produce		json
-//	@Param			request	body	request.DeleteRoleReq	true	"角色id"
-//	@Success		200	{object}	response.DeleteRoleResp	"删除成功"
+//	@Param			request	body		request.DeleteRoleReq	true	"角色id"
+//	@Success		200		{object}	response.DeleteRoleResp	"删除成功"
 //	@Router			/role/delete [post]
 func DeleteRole(c *gin.Context) {
 	var req request.DeleteRoleReq

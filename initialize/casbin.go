@@ -1,7 +1,6 @@
 package initialize
 
 import (
-	"fmt"
 	sqlxadapter "github.com/Blank-Xu/sqlx-adapter"
 	"github.com/casbin/casbin/v2"
 	"rmall/global"
@@ -18,22 +17,37 @@ func initCasbin() {
 	if err != nil {
 		panic(err)
 	}
-	user, err := global.E.AddRoleForUser("yyy", "admin")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(user)
-	forUser, err := global.E.GetRolesForUser("xxx")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(forUser)
-	role, err := global.E.GetUsersForRole("admin")
-	if err != nil {
-		panic(err)
-	}
+	//ok, err := global.E.AddPolicy("admin", "*", "*")
+	//if err != nil {
+	//	panic(err)
+	//}
+	//if ok {
+	//	fmt.Println("添加成功")
+	//}
+	//ok, err = global.E.AddRoleForUser("rice", "admin")
+	//if err != nil {
+	//	panic(err)
+	//}
+	//if ok {
+	//	fmt.Println("添加成功")
+	//}
 
-	fmt.Println(role)
+	//user, err := global.E.AddRoleForUser("yyy", "admin")
+	//if err != nil {
+	//	panic(err)
+	//}
+	//fmt.Println(user)
+	//forUser, err := global.E.GetRolesForUser("xxx")
+	//if err != nil {
+	//	panic(err)
+	//}
+	//fmt.Println(forUser)
+	//role, err := global.E.GetUsersForRole("admin")
+	//if err != nil {
+	//	panic(err)
+	//}
+	//
+	//fmt.Println(role)
 	//fmt.Println(service.GetPolicy())
 	//fmt.Println(service.GetPolicyByRole("hw"))
 	//fmt.Println(service.GetPolicyByPath("/api/v1/casbin"))
