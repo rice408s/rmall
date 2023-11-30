@@ -40,3 +40,8 @@ func FindRoleByPage(req *request.GetRoleListReq) (roles []*model.Role, err error
 	// 从数据库中查找所有角色
 	return dao.FindRoleByPage(start, req.PageSize)
 }
+
+func FindRoleByAdminId(req *request.GetRoleListByAdminIdReq) (roles []*model.Role, err error) {
+	// 从数据库中查找所有角色
+	return dao.FindRoleByAdminId(req.Id)
+}

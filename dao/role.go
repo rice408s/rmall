@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"rmall/global"
 	"rmall/model"
+	"rmall/utils"
 	"strconv"
 )
 
@@ -80,4 +81,28 @@ func DeleteRoleByRoleName(roleName string) (err error) {
 		return err
 	}
 	return nil
+}
+
+// FindRoleByAdminId 根据管理员id查找角色
+func FindRoleByAdminId(adminId int) (roles []*model.Role, err error) {
+	//查询出所有的角色的id
+	roleIds, err := global.E.GetRolesForUser(strconv.Itoa(adminId))
+	if err != nil {
+		return nil, err
+	}
+	intArray, err := utils.ConvertStringArrayToIntArray(roleIds)
+	if err != nil {
+		return nil, err
+	}
+
+	//根据角色id查询出所有的角色
+	roles = []*model.Role{}
+	for _, roleId := range intArray {
+		role, err := FindRoleById(roleId)
+		if err != nil {
+			return nil, err
+		}
+		roles = append(roles, role)
+	}
+	return roles, nil
 }

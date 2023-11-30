@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"rmall/global"
 	"rmall/model/request"
 	"rmall/model/response"
 	"rmall/service"
+	"strconv"
 )
 
 // AddRole
@@ -65,6 +67,7 @@ func UpdateRole(c *gin.Context) {
 		})
 		return
 	}
+	// 更新角色的同时不用更新策略，因为策略使用的是角色id，角色id不会变
 
 	c.JSON(http.StatusOK, response.UpdateRoleResp{Id: req.Id})
 }
@@ -93,6 +96,36 @@ func DeleteRole(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
+		})
+		return
+	}
+	// 删除角色的同时删除角色策略
+	ok, err := global.E.RemoveFilteredPolicy(0, strconv.Itoa(req.Id))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+	if !ok {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "删除策略失败",
+		})
+		return
+	}
+
+	// 删除角色的同时删除管理员与角色的关联
+	ok, err = service.RemovePolicyByRole(strconv.Itoa(req.Id))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	if !ok {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "删除管理员关联角色策略失败",
 		})
 		return
 	}
@@ -128,4 +161,33 @@ func GetRoleList(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, response.GetRoleListResp{Total: len(list), List: list})
+}
+
+// GetRoleListByAdmin
+// @Summary 通过管理员id获取角色列表
+// @Description 通过管理员id获取角色列表
+// @Tags 角色
+// @Accept json
+// @Produce json
+// @Param request query request.GetRoleListByAdminIdReq true "通过管理员id获取角色列表"
+// @Success 200 {object} string
+// @Router /role/listByAdminId [get]
+func GetRoleListByAdmin(c *gin.Context) {
+	var req request.GetRoleListByAdminIdReq
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+	fmt.Println("req:", req)
+
+	list, err := service.FindRoleByAdminId(&req)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+	c.JSON(http.StatusOK, response.GetRoleListByAdminIdResp{Total: len(list), List: list})
 }

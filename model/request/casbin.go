@@ -23,3 +23,7 @@ type UpdatePolicyReq struct {
 	NewV1 string `json:"new_v1" binding:"required"`
 	NewV2 string `json:"new_v2"`
 }
+
+type GetPolicyByRoleReq struct {
+	Id int `json:"id" form:"id"`
+}

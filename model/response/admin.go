@@ -1,5 +1,7 @@
 package response
 
+import "rmall/model"
+
 type AdminLoginResp struct {
 	Token string `json:"token"`
 	// 过期时间
@@ -18,4 +20,9 @@ type AdminInfo struct {
 	Username string `json:"username"`
 	Mobile   string `json:"mobile"`
 	Email    string `json:"email"`
+}
+
+type AdminListResp struct {
+	Total int            `json:"total"`
+	List  []*model.Admin `json:"list"`
 }

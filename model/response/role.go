@@ -27,3 +27,8 @@ type GetRoleListResp struct {
 	Total int           `json:"total"`
 	List  []*model.Role `json:"list"`
 }
+
+type GetRoleListByAdminIdResp struct {
+	Total int           `json:"total"`
+	List  []*model.Role `json:"list"`
+}

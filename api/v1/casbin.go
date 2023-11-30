@@ -142,3 +142,30 @@ func GetPolicyList(c *gin.Context) {
 		"msg":     "获取成功",
 	})
 }
+
+// GetPolicyByRole 通过角色获取策略
+// summary		通过角色获取策略
+// Description	通过角色获取策略
+// Tags			策略管理
+// Accept		json
+// Produce		json
+// Param		request	body		request.GetPolicyByRoleReq	true	"通过角色获取策略"
+// Success		200		{string}	string					"{"success":true,"data":{},"msg":"获取成功"}"
+// Router		/admin/policy/getByRole [post]
+func GetPolicyByRole(c *gin.Context) {
+	var req request.GetPolicyByRoleReq
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		c.JSON(500, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	policy := service.GetPolicyByRole(&req)
+	c.JSON(200, gin.H{
+		"success": true,
+		"data":    policy,
+		"msg":     "获取成功",
+	})
+}
