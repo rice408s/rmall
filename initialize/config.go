@@ -6,7 +6,7 @@ import (
 	"rmall/global"
 )
 
-func LoadConfig(path string) {
+func loadConfig(path string) {
 	viper.SetConfigFile(path)
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")

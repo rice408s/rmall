@@ -3,8 +3,8 @@ package initialize
 import "rmall/router"
 
 func Run() {
-	LoadConfig("./config.yaml")
-	Mysql()
-	InitCasbin()
+	loadConfig("./config.yaml")
+	mysql()
+	initCasbin()
 	router.Route()
 }

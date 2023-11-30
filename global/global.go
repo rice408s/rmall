@@ -1,6 +1,7 @@
 package global
 
 import (
+	"github.com/casbin/casbin/v2"
 	"github.com/jmoiron/sqlx"
 	"rmall/config"
 )
@@ -9,4 +10,5 @@ import (
 var (
 	Config config.Config
 	Db     *sqlx.DB
+	E      *casbin.Enforcer
 )
