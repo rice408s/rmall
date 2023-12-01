@@ -8,7 +8,7 @@ import (
 
 func initCasbin() {
 	//初始化casbin
-	a, err := sqlxadapter.NewAdapter(global.Db, "casbin_rule")
+	a, err := sqlxadapter.NewAdapter(global.DB, "casbin_rule")
 	if err != nil {
 		panic(err)
 	}

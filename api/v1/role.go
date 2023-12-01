@@ -164,14 +164,14 @@ func GetRoleList(c *gin.Context) {
 }
 
 // GetRoleListByAdmin
-// @Summary 通过管理员id获取角色列表
-// @Description 通过管理员id获取角色列表
-// @Tags 角色
-// @Accept json
-// @Produce json
-// @Param request query request.GetRoleListByAdminIdReq true "通过管理员id获取角色列表"
-// @Success 200 {object} string
-// @Router /role/listByAdminId [get]
+//	@Summary		通过管理员id获取角色列表
+//	@Description	通过管理员id获取角色列表
+//	@Tags			角色
+//	@Accept			json
+//	@Produce		json
+//	@Param			request	query		request.GetRoleListByAdminIdReq	true	"通过管理员id获取角色列表"
+//	@Success		200		{object}	string
+//	@Router			/role/listByAdminId [get]
 func GetRoleListByAdmin(c *gin.Context) {
 	var req request.GetRoleListByAdminIdReq
 	if err := c.ShouldBindJSON(&req); err != nil {

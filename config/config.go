@@ -3,6 +3,7 @@ package config
 type Config struct {
 	Mysql Mysql `mapstructure:"mysql" json:"mysql" yaml:"mysql"`
 	JWT   JWT   `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
+	Redis Redis `mapstructure:"redis" json:"redis" yaml:"redis"`
 }
 
 // Mysql  MySQL配置
@@ -22,3 +23,9 @@ type JWT struct {
 }
 
 // DefaultConfig 默认配置
+
+type Redis struct {
+	Addr     string `mapstructure:"addr" json:"addr" yaml:"addr"`             // 主机名
+	Password string `mapstructure:"password" json:"password" yaml:"password"` // 密码
+	DB       int    `mapstructure:"db" json:"db" yaml:"db"`                   // 数据库名
+}

@@ -35,15 +35,15 @@ func Route() {
 		userRequired := v1.Group("/user")
 		userRequired.Use(api.UserAuthRequired())
 		{
-			userRequired.GET("/info", api.GetUserInfo)
+			userRequired.POST("/info", api.GetUserInfo)
 		}
 
 		//需要token验证的admin路由
 		adminRequired := v1.Group("/admin")
 		adminRequired.Use(api.AdminAuthRequired(), api.CasbinMiddleware())
 		{
-			adminRequired.GET("/info", api.GetAdminInfo) //管理员信息
-			adminRequired.GET("/list", api.GetAdminList) //管理员列表
+			adminRequired.POST("/info", api.GetAdminInfo) //管理员信息
+			adminRequired.POST("/list", api.GetAdminList) //管理员列表
 		}
 
 		//casbin相关路由
@@ -52,7 +52,7 @@ func Route() {
 			policy.POST("/add", api.AddPolicy)              //添加策略
 			policy.POST("/remove", api.RemovePolicy)        //删除策略
 			policy.POST("/update", api.UpdatePolicy)        //更新策略
-			policy.GET("/list", api.GetPolicyList)          //获取策略列表
+			policy.POST("/list", api.GetPolicyList)         //获取策略列表
 			policy.POST("/listByRole", api.GetPolicyByRole) //获取角色策略列表
 		}
 
@@ -62,10 +62,21 @@ func Route() {
 			role.POST("/add", api.AddRole)       //添加角色
 			role.POST("/update", api.UpdateRole) //更新角色
 			role.POST("/delete", api.DeleteRole) //删除角色
-			role.GET("/list", api.GetRoleList)   //获取角色列表
+			role.POST("/list", api.GetRoleList)  //获取角色列表
 			//给管理员分配角色
 			role.POST("/assign", api.AssignRoleToAdmin)       //给管理员分配角色
 			role.POST("/listByAdmin", api.GetRoleListByAdmin) //获取管理员角色列表
+		}
+
+		//产品相关路由
+		product := adminRequired.Group("/product")
+		{
+			product.POST("/add", api.AddProduct)          //添加产品
+			product.POST("/update", api.UpdateProduct)    //更新产品
+			product.POST("/delete", api.DeleteProduct)    //删除产品
+			product.POST("/list", api.GetProductList)     //获取产品列表
+			product.POST("/detail", api.GetProductById)   //获取产品详情
+			product.POST("/search", api.GetProductByName) //模糊查询产品
 		}
 
 	}

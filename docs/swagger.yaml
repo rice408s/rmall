@@ -1,5 +1,28 @@
 basePath: /api/v1
 definitions:
+  model.Product:
+    properties:
+      create_time:
+        type: string
+      desc:
+        description: 产品描述
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        description: 价格
+        type: integer
+      status:
+        description: 产品状态 0-下架 1-上架
+        type: integer
+      stock:
+        description: 库存
+        type: integer
+      update_time:
+        type: string
+    type: object
   model.Role:
     properties:
       id:
@@ -25,6 +48,16 @@ definitions:
         type: string
     required:
     - name
+    type: object
+  request.AdminAssignRoleReq:
+    properties:
+      admin_id:
+        type: integer
+      role_id:
+        type: integer
+    required:
+    - admin_id
+    - role_id
     type: object
   request.AdminLoginReq:
     properties:
@@ -52,12 +85,61 @@ definitions:
     - password
     - username
     type: object
+  request.CreateProductReq:
+    properties:
+      desc:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+      status:
+        description: 产品状态 0-下架 1-上架
+        type: integer
+      stock:
+        type: integer
+    required:
+    - desc
+    - name
+    - price
+    - status
+    - stock
+    type: object
+  request.DeleteProductReq:
+    properties:
+      id:
+        type: integer
+    type: object
   request.DeleteRoleReq:
     properties:
       id:
         type: integer
     required:
     - id
+    type: object
+  request.GetAdminListReq:
+    properties:
+      page_num:
+        type: integer
+      page_size:
+        type: integer
+    type: object
+  request.GetProductByIdReq:
+    properties:
+      id:
+        type: integer
+    type: object
+  request.GetProductByNameReq:
+    properties:
+      name:
+        type: string
+    type: object
+  request.GetProductListReq:
+    properties:
+      page_num:
+        type: integer
+      page_size:
+        type: integer
     type: object
   request.RemovePolicyReq:
     properties:
@@ -90,6 +172,32 @@ definitions:
     - new_v1
     - old_v0
     - old_v1
+    type: object
+  request.UpdateProductReq:
+    properties:
+      desc:
+        type: string
+      id:
+        type: integer
+      img:
+        type: string
+      name:
+        type: string
+      price:
+        type: integer
+      status:
+        description: 产品状态 0-下架 1-上架
+        type: integer
+      stock:
+        type: integer
+    required:
+    - desc
+    - id
+    - img
+    - name
+    - price
+    - status
+    - stock
     type: object
   request.UpdateRoleReq:
     properties:
@@ -162,9 +270,62 @@ definitions:
       username:
         type: string
     type: object
+  response.CreateProductResp:
+    properties:
+      id:
+        type: integer
+    type: object
+  response.DeleteProductResp:
+    properties:
+      id:
+        type: integer
+    type: object
   response.DeleteRoleResp:
     properties:
       id:
+        type: integer
+    type: object
+  response.GetProductByIdResp:
+    properties:
+      create_time:
+        type: string
+      desc:
+        description: 产品描述
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        description: 价格
+        type: integer
+      status:
+        description: 产品状态 0-下架 1-上架
+        type: integer
+      stock:
+        description: 库存
+        type: integer
+      update_time:
+        type: string
+    type: object
+  response.GetProductByNameResp:
+    properties:
+      list:
+        description: 产品列表
+        items:
+          $ref: '#/definitions/model.Product'
+        type: array
+      total:
+        description: 总数
+        type: integer
+    type: object
+  response.GetProductListResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/model.Product'
+        type: array
+      total:
         type: integer
     type: object
   response.GetRoleListResp:
@@ -174,6 +335,11 @@ definitions:
           $ref: '#/definitions/model.Role'
         type: array
       total:
+        type: integer
+    type: object
+  response.UpdateProductResp:
+    properties:
+      id:
         type: integer
     type: object
   response.UpdateRoleResp:
@@ -213,72 +379,28 @@ info:
   title: 商城系统
   version: "1.0"
 paths:
-  /admin/casbin/add:
+  /admin/assign-role:
     post:
       consumes:
       - application/json
-      description: 添加策略
+      description: 给管理员分配角色
       parameters:
-      - description: 添加策略
+      - description: 分配角色
         in: body
         name: request
         required: true
         schema:
-          $ref: '#/definitions/request.AddPolicyReq'
+          $ref: '#/definitions/request.AdminAssignRoleReq'
       produces:
       - application/json
       responses:
         "200":
-          description: '{"success":true,"data":{},"msg":"添加成功"}'
+          description: OK
           schema:
             type: string
-      summary: 添加策略
+      summary: 给管理员分配角色
       tags:
-      - 策略管理
-  /admin/casbin/remove:
-    post:
-      consumes:
-      - application/json
-      description: 删除策略
-      parameters:
-      - description: 删除策略
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/request.RemovePolicyReq'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"success":true,"data":{},"msg":"删除成功"}'
-          schema:
-            type: string
-      summary: 删除策略
-      tags:
-      - 策略管理
-  /admin/casbin/update:
-    post:
-      consumes:
-      - application/json
-      description: 修改策略
-      parameters:
-      - description: 修改策略
-        in: body
-        name: request
-        required: true
-        schema:
-          $ref: '#/definitions/request.UpdatePolicyReq'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"success":true,"data":{},"msg":"修改成功"}'
-          schema:
-            type: string
-      summary: 修改策略
-      tags:
-      - 策略管理
+      - 管理员
   /admin/info:
     get:
       consumes:
@@ -298,6 +420,28 @@ paths:
           schema:
             $ref: '#/definitions/response.AdminInfo'
       summary: 管理员信息
+      tags:
+      - 管理员
+  /admin/list:
+    post:
+      consumes:
+      - application/json
+      description: 获取管理员列表
+      parameters:
+      - description: 获取管理员列表
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.GetAdminListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: 获取管理员列表
       tags:
       - 管理员
   /admin/login:
@@ -322,6 +466,72 @@ paths:
       summary: 管理员登录
       tags:
       - 管理员
+  /admin/policy/add:
+    post:
+      consumes:
+      - application/json
+      description: 添加策略
+      parameters:
+      - description: 添加策略
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.AddPolicyReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"添加成功"}'
+          schema:
+            type: string
+      summary: 添加策略
+      tags:
+      - 策略管理
+  /admin/policy/remove:
+    post:
+      consumes:
+      - application/json
+      description: 删除策略
+      parameters:
+      - description: 删除策略
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.RemovePolicyReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"删除成功"}'
+          schema:
+            type: string
+      summary: 删除策略
+      tags:
+      - 策略管理
+  /admin/policy/update:
+    post:
+      consumes:
+      - application/json
+      description: 修改策略
+      parameters:
+      - description: 修改策略
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdatePolicyReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"success":true,"data":{},"msg":"修改成功"}'
+          schema:
+            type: string
+      summary: 修改策略
+      tags:
+      - 策略管理
   /admin/register:
     post:
       consumes:
@@ -348,6 +558,138 @@ paths:
       summary: 管理员注册
       tags:
       - 管理员
+  /product/add:
+    post:
+      consumes:
+      - application/json
+      description: 添加产品
+      parameters:
+      - description: 添加产品
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateProductReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 添加成功
+          schema:
+            $ref: '#/definitions/response.CreateProductResp'
+      summary: 添加产品
+      tags:
+      - 产品
+  /product/delete:
+    post:
+      consumes:
+      - application/json
+      description: 删除产品
+      parameters:
+      - description: 删除产品
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.DeleteProductReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 删除成功
+          schema:
+            $ref: '#/definitions/response.DeleteProductResp'
+      summary: 删除产品
+      tags:
+      - 产品
+  /product/get:
+    post:
+      consumes:
+      - application/json
+      description: 根据id获取产品
+      parameters:
+      - description: 根据id获取产品
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.GetProductByIdReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            $ref: '#/definitions/response.GetProductByIdResp'
+      summary: 根据id获取产品
+      tags:
+      - 产品
+  /product/getByName:
+    post:
+      consumes:
+      - application/json
+      description: 根据名称获取产品列表
+      parameters:
+      - description: 根据名称获取产品列表
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.GetProductByNameReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            $ref: '#/definitions/response.GetProductByNameResp'
+      summary: 根据名称获取产品列表
+      tags:
+      - 产品
+  /product/list:
+    post:
+      consumes:
+      - application/json
+      description: 获取产品列表
+      parameters:
+      - description: 获取产品列表
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.GetProductListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取成功
+          schema:
+            $ref: '#/definitions/response.GetProductListResp'
+      summary: 获取产品列表
+      tags:
+      - 产品
+  /product/update:
+    post:
+      consumes:
+      - application/json
+      description: 更新产品
+      parameters:
+      - description: 更新产品
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateProductReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 更新成功
+          schema:
+            $ref: '#/definitions/response.UpdateProductResp'
+      summary: 更新产品
+      tags:
+      - 产品
   /role/add:
     post:
       consumes:
@@ -412,6 +754,25 @@ paths:
           schema:
             $ref: '#/definitions/response.GetRoleListResp'
       summary: 查询角色列表
+      tags:
+      - 角色
+  /role/listByAdminId:
+    get:
+      consumes:
+      - application/json
+      description: 通过管理员id获取角色列表
+      parameters:
+      - in: query
+        name: id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: 通过管理员id获取角色列表
       tags:
       - 角色
   /role/update:

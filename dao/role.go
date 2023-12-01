@@ -11,7 +11,7 @@ import (
 // AddRole 添加角色
 func AddRole(role *model.Role) (id int, err error) {
 	insertStr := `insert into role(role_name) values(?)` // 插入语句
-	res, err := global.Db.Exec(insertStr, role.RoleName) //执行插入语句
+	res, err := global.DB.Exec(insertStr, role.RoleName) //执行插入语句
 	if err != nil {
 		return 0, err
 	}
@@ -23,7 +23,7 @@ func AddRole(role *model.Role) (id int, err error) {
 func FindRoleByRoleName(roleName string) (role *model.Role, err error) {
 	queryStr := `select * from role where role_name=?`
 	role = &model.Role{}
-	err = global.Db.Get(role, queryStr, roleName)
+	err = global.DB.Get(role, queryStr, roleName)
 	if err != nil {
 		return nil, err
 	}
@@ -34,7 +34,7 @@ func FindRoleByRoleName(roleName string) (role *model.Role, err error) {
 func FindRoleById(Id int) (role *model.Role, err error) {
 	queryStr := `select * from role where id=?`
 	role = &model.Role{}
-	err = global.Db.Get(role, queryStr, Id)
+	err = global.DB.Get(role, queryStr, Id)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func FindRoleByPage(offset, pageSize int) (roles []*model.Role, err error) {
 	queryStr := `select * from role` + " limit " + strconv.Itoa(pageSize) + " offset " + strconv.Itoa(offset)
 	roles = []*model.Role{}
 	fmt.Println(queryStr)
-	err = global.Db.Select(&roles, queryStr)
+	err = global.DB.Select(&roles, queryStr)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +56,7 @@ func FindRoleByPage(offset, pageSize int) (roles []*model.Role, err error) {
 // UpdateRole 更新角色
 func UpdateRole(role *model.Role) (err error) {
 	updateStr := `update role set role_name=? where id=?`
-	_, err = global.Db.Exec(updateStr, role.RoleName, role.Id)
+	_, err = global.DB.Exec(updateStr, role.RoleName, role.Id)
 	if err != nil {
 		return err
 	}
@@ -66,7 +66,7 @@ func UpdateRole(role *model.Role) (err error) {
 // DeleteRoleById 根据角色id删除角色
 func DeleteRoleById(Id int) (err error) {
 	deleteStr := `delete from role where id=?`
-	_, err = global.Db.Exec(deleteStr, Id)
+	_, err = global.DB.Exec(deleteStr, Id)
 	if err != nil {
 		return err
 	}
@@ -76,7 +76,7 @@ func DeleteRoleById(Id int) (err error) {
 // DeleteRoleByRoleName 根据角色名删除角色
 func DeleteRoleByRoleName(roleName string) (err error) {
 	deleteStr := `delete from role where role_name=?`
-	_, err = global.Db.Exec(deleteStr, roleName)
+	_, err = global.DB.Exec(deleteStr, roleName)
 	if err != nil {
 		return err
 	}

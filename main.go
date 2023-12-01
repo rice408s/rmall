@@ -24,8 +24,10 @@ import (
 
 func main() {
 	initialize.Run()
+
 }
 
-func casbin() {
+func testRedis() {
+	//ctx := redis.co
 
 }

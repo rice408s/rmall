@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"database/sql"
 	"errors"
 	"fmt"
@@ -12,6 +13,8 @@ import (
 	"strconv"
 	"time"
 )
+
+var ctx = context.Background()
 
 // AdminRegister 管理员注册
 func AdminRegister(req *request.AdminRegisterReq) (int, error) {
@@ -43,7 +46,7 @@ func AdminRegister(req *request.AdminRegisterReq) (int, error) {
 		CreatedAt: time.Now(),
 	}
 	//插入数据库
-	return dao.AddAdmin(admin)
+	return dao.AddAdmin(ctx, admin)
 
 }
 

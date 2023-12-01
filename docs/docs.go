@@ -23,9 +23,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/admin/casbin/add": {
+        "/admin/assign-role": {
             "post": {
-                "description": "添加策略",
+                "description": "给管理员分配角色",
                 "consumes": [
                     "application/json"
                 ],
@@ -33,91 +33,23 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "策略管理"
+                    "管理员"
                 ],
-                "summary": "添加策略",
+                "summary": "给管理员分配角色",
                 "parameters": [
                     {
-                        "description": "添加策略",
+                        "description": "分配角色",
                         "name": "request",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/request.AddPolicyReq"
+                            "$ref": "#/definitions/request.AdminAssignRoleReq"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "{\"success\":true,\"data\":{},\"msg\":\"添加成功\"}",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/admin/casbin/remove": {
-            "post": {
-                "description": "删除策略",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "策略管理"
-                ],
-                "summary": "删除策略",
-                "parameters": [
-                    {
-                        "description": "删除策略",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.RemovePolicyReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "{\"success\":true,\"data\":{},\"msg\":\"删除成功\"}",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/admin/casbin/update": {
-            "post": {
-                "description": "修改策略",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "策略管理"
-                ],
-                "summary": "修改策略",
-                "parameters": [
-                    {
-                        "description": "修改策略",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.UpdatePolicyReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "{\"success\":true,\"data\":{},\"msg\":\"修改成功\"}",
+                        "description": "OK",
                         "schema": {
                             "type": "string"
                         }
@@ -157,6 +89,40 @@ const docTemplate = `{
                 }
             }
         },
+        "/admin/list": {
+            "post": {
+                "description": "获取管理员列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "管理员"
+                ],
+                "summary": "获取管理员列表",
+                "parameters": [
+                    {
+                        "description": "获取管理员列表",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetAdminListReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/login": {
             "post": {
                 "description": "管理员登录",
@@ -186,6 +152,108 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/response.AdminLoginResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/policy/add": {
+            "post": {
+                "description": "添加策略",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "策略管理"
+                ],
+                "summary": "添加策略",
+                "parameters": [
+                    {
+                        "description": "添加策略",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.AddPolicyReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"添加成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/policy/remove": {
+            "post": {
+                "description": "删除策略",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "策略管理"
+                ],
+                "summary": "删除策略",
+                "parameters": [
+                    {
+                        "description": "删除策略",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.RemovePolicyReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"删除成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/policy/update": {
+            "post": {
+                "description": "修改策略",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "策略管理"
+                ],
+                "summary": "修改策略",
+                "parameters": [
+                    {
+                        "description": "修改策略",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdatePolicyReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"修改成功\"}",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -226,6 +294,210 @@ const docTemplate = `{
                         "description": "Internal Server Error",
                         "schema": {
                             "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/product/add": {
+            "post": {
+                "description": "添加产品",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "产品"
+                ],
+                "summary": "添加产品",
+                "parameters": [
+                    {
+                        "description": "添加产品",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CreateProductReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "添加成功",
+                        "schema": {
+                            "$ref": "#/definitions/response.CreateProductResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/product/delete": {
+            "post": {
+                "description": "删除产品",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "产品"
+                ],
+                "summary": "删除产品",
+                "parameters": [
+                    {
+                        "description": "删除产品",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DeleteProductReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "删除成功",
+                        "schema": {
+                            "$ref": "#/definitions/response.DeleteProductResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/product/get": {
+            "post": {
+                "description": "根据id获取产品",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "产品"
+                ],
+                "summary": "根据id获取产品",
+                "parameters": [
+                    {
+                        "description": "根据id获取产品",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetProductByIdReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取成功",
+                        "schema": {
+                            "$ref": "#/definitions/response.GetProductByIdResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/product/getByName": {
+            "post": {
+                "description": "根据名称获取产品列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "产品"
+                ],
+                "summary": "根据名称获取产品列表",
+                "parameters": [
+                    {
+                        "description": "根据名称获取产品列表",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetProductByNameReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取成功",
+                        "schema": {
+                            "$ref": "#/definitions/response.GetProductByNameResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/product/list": {
+            "post": {
+                "description": "获取产品列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "产品"
+                ],
+                "summary": "获取产品列表",
+                "parameters": [
+                    {
+                        "description": "获取产品列表",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetProductListReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取成功",
+                        "schema": {
+                            "$ref": "#/definitions/response.GetProductListResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/product/update": {
+            "post": {
+                "description": "更新产品",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "产品"
+                ],
+                "summary": "更新产品",
+                "parameters": [
+                    {
+                        "description": "更新产品",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdateProductReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "更新成功",
+                        "schema": {
+                            "$ref": "#/definitions/response.UpdateProductResp"
                         }
                     }
                 }
@@ -329,6 +601,36 @@ const docTemplate = `{
                         "description": "查询成功",
                         "schema": {
                             "$ref": "#/definitions/response.GetRoleListResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/role/listByAdminId": {
+            "get": {
+                "description": "通过管理员id获取角色列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "角色"
+                ],
+                "summary": "通过管理员id获取角色列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "name": "id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -444,6 +746,39 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "model.Product": {
+            "type": "object",
+            "properties": {
+                "create_time": {
+                    "type": "string"
+                },
+                "desc": {
+                    "description": "产品描述",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "description": "价格",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "产品状态 0-下架 1-上架",
+                    "type": "integer"
+                },
+                "stock": {
+                    "description": "库存",
+                    "type": "integer"
+                },
+                "update_time": {
+                    "type": "string"
+                }
+            }
+        },
         "model.Role": {
             "type": "object",
             "properties": {
@@ -481,6 +816,21 @@ const docTemplate = `{
             "properties": {
                 "name": {
                     "type": "string"
+                }
+            }
+        },
+        "request.AdminAssignRoleReq": {
+            "type": "object",
+            "required": [
+                "admin_id",
+                "role_id"
+            ],
+            "properties": {
+                "admin_id": {
+                    "type": "integer"
+                },
+                "role_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -522,6 +872,42 @@ const docTemplate = `{
                 }
             }
         },
+        "request.CreateProductReq": {
+            "type": "object",
+            "required": [
+                "desc",
+                "name",
+                "price",
+                "status",
+                "stock"
+            ],
+            "properties": {
+                "desc": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "产品状态 0-下架 1-上架",
+                    "type": "integer"
+                },
+                "stock": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.DeleteProductReq": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
         "request.DeleteRoleReq": {
             "type": "object",
             "required": [
@@ -529,6 +915,44 @@ const docTemplate = `{
             ],
             "properties": {
                 "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.GetAdminListReq": {
+            "type": "object",
+            "properties": {
+                "page_num": {
+                    "type": "integer"
+                },
+                "page_size": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.GetProductByIdReq": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.GetProductByNameReq": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.GetProductListReq": {
+            "type": "object",
+            "properties": {
+                "page_num": {
+                    "type": "integer"
+                },
+                "page_size": {
                     "type": "integer"
                 }
             }
@@ -577,6 +1001,42 @@ const docTemplate = `{
                 },
                 "old_v2": {
                     "type": "string"
+                }
+            }
+        },
+        "request.UpdateProductReq": {
+            "type": "object",
+            "required": [
+                "desc",
+                "id",
+                "img",
+                "name",
+                "price",
+                "status",
+                "stock"
+            ],
+            "properties": {
+                "desc": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "img": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "产品状态 0-下架 1-上架",
+                    "type": "integer"
+                },
+                "stock": {
+                    "type": "integer"
                 }
             }
         },
@@ -687,10 +1147,89 @@ const docTemplate = `{
                 }
             }
         },
+        "response.CreateProductResp": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.DeleteProductResp": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
         "response.DeleteRoleResp": {
             "type": "object",
             "properties": {
                 "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.GetProductByIdResp": {
+            "type": "object",
+            "properties": {
+                "create_time": {
+                    "type": "string"
+                },
+                "desc": {
+                    "description": "产品描述",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "description": "价格",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "产品状态 0-下架 1-上架",
+                    "type": "integer"
+                },
+                "stock": {
+                    "description": "库存",
+                    "type": "integer"
+                },
+                "update_time": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.GetProductByNameResp": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "description": "产品列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Product"
+                    }
+                },
+                "total": {
+                    "description": "总数",
+                    "type": "integer"
+                }
+            }
+        },
+        "response.GetProductListResp": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Product"
+                    }
+                },
+                "total": {
                     "type": "integer"
                 }
             }
@@ -705,6 +1244,14 @@ const docTemplate = `{
                     }
                 },
                 "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.UpdateProductResp": {
+            "type": "object",
+            "properties": {
+                "id": {
                     "type": "integer"
                 }
             }

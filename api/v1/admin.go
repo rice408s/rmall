@@ -106,14 +106,14 @@ func GetAdminInfo(c *gin.Context) {
 }
 
 // GetAdminList 获取管理员列表
-// @Summary 获取管理员列表
-// @Description 获取管理员列表
-// @Tags 管理员
-// @Accept json
-// @Produce json
-// @Param request body request request.GetAdminListReq true "获取管理员列表"
-// @Success 200 {object} string
-// @Router /admin/list [post]
+//	@Summary		获取管理员列表
+//	@Description	获取管理员列表
+//	@Tags			管理员
+//	@Accept			json
+//	@Produce		json
+//	@Param			request	body		request.GetAdminListReq	true	"获取管理员列表"
+//	@Success		200		{object}	string
+//	@Router			/admin/list [post]
 func GetAdminList(c *gin.Context) {
 	var req request.GetAdminListReq
 	//绑定参数
@@ -146,7 +146,7 @@ func GetAdminList(c *gin.Context) {
 //	@Tags			管理员
 //	@Accept			json
 //	@Produce		json
-//	@Param			request	body		request.AdminAssignRoleReq
+//	@Param			request	body		request.AdminAssignRoleReq	true	"分配角色"
 //	@Success		200		{object}	string
 //	@Router			/admin/assign-role [post]
 func AssignRoleToAdmin(c *gin.Context) {
@@ -181,11 +181,3 @@ func AssignRoleToAdmin(c *gin.Context) {
 		"msg": "分配成功",
 	})
 }
-
-//获取管理员角色列表
-//
-//	@summary		获取管理员角色列表
-//	@Description	获取管理员角色列表
-//	@Tags			管理员
-//	@Accept			json
-//	@Produce		json

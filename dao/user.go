@@ -8,7 +8,7 @@ import (
 // AddUser 添加用户
 func AddUser(user *model.User) (id int, err error) {
 	insertStr := `insert into user(username,password,mobile,email,created_at) values(?,?,?,?,?)`                 // 插入语句
-	res, err := global.Db.Exec(insertStr, user.Username, user.Password, user.Mobile, user.Email, user.CreatedAt) //执行插入语句
+	res, err := global.DB.Exec(insertStr, user.Username, user.Password, user.Mobile, user.Email, user.CreatedAt) //执行插入语句
 	if err != nil {
 		return 0, err
 	}
@@ -21,7 +21,7 @@ func AddUser(user *model.User) (id int, err error) {
 func FindUserByUsername(username string) (user *model.User, err error) {
 	queryStr := `select * from user where username=?`
 	user = &model.User{}
-	err = global.Db.Get(user, queryStr, username)
+	err = global.DB.Get(user, queryStr, username)
 	if err != nil {
 		return nil, err
 	}
@@ -32,7 +32,7 @@ func FindUserByUsername(username string) (user *model.User, err error) {
 func FindUserById(Id int) (user *model.User, err error) {
 	queryStr := `select * from user where id=?`
 	user = &model.User{}
-	err = global.Db.Get(user, queryStr, Id)
+	err = global.DB.Get(user, queryStr, Id)
 	if err != nil {
 		return nil, err
 	}

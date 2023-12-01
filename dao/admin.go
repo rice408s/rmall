@@ -1,15 +1,17 @@
 package dao
 
 import (
+	"context"
 	"rmall/global"
 	"rmall/model"
 	"strconv"
 )
 
 // AddAdmin 添加管理员
-func AddAdmin(admin *model.Admin) (id int, err error) {
+func AddAdmin(ctx context.Context, admin *model.Admin) (id int, err error) {
+	//在mysql中添加管理员
 	insertStr := `insert into admin(username,password,mobile,email,created_at) values(?,?,?,?,?)`
-	res, err := global.Db.Exec(insertStr, admin.Username, admin.Password, admin.Mobile, admin.Email, admin.CreatedAt)
+	res, err := global.DB.Exec(insertStr, admin.Username, admin.Password, admin.Mobile, admin.Email, admin.CreatedAt)
 	if err != nil {
 		return 0, err
 	}
@@ -21,7 +23,7 @@ func AddAdmin(admin *model.Admin) (id int, err error) {
 func FindAdminByUsername(username string) (admin *model.Admin, err error) {
 	queryStr := `select * from admin where username=?`
 	admin = &model.Admin{}
-	err = global.Db.Get(admin, queryStr, username)
+	err = global.DB.Get(admin, queryStr, username)
 	if err != nil {
 		return nil, err
 	}
@@ -32,7 +34,7 @@ func FindAdminByUsername(username string) (admin *model.Admin, err error) {
 func FindAdminById(Id int) (admin *model.Admin, err error) {
 	queryStr := `select * from admin where id=?`
 	admin = &model.Admin{}
-	err = global.Db.Get(admin, queryStr, Id)
+	err = global.DB.Get(admin, queryStr, Id)
 	if err != nil {
 		return nil, err
 	}
@@ -42,13 +44,9 @@ func FindAdminById(Id int) (admin *model.Admin, err error) {
 func FindAdminByPage(offset, pageSize int) (admins []*model.Admin, err error) {
 	queryStr := `select * from admin` + " limit " + strconv.Itoa(pageSize) + " offset " + strconv.Itoa(offset)
 	admins = []*model.Admin{}
-	err = global.Db.Select(&admins, queryStr)
+	err = global.DB.Select(&admins, queryStr)
 	if err != nil {
 		return nil, err
 	}
 	return admins, nil
 }
-
-//func FindAdminRoleByAdminId(adminId int) (role *model.Role, err error) {
-//
-//}
