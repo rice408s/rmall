@@ -191,6 +191,63 @@ const docTemplate = `{
                 }
             }
         },
+        "/admin/policy/getByRole": {
+            "post": {
+                "description": "通过角色获取策略",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "策略管理"
+                ],
+                "summary": "通过角色获取策略",
+                "parameters": [
+                    {
+                        "description": "通过角色获取策略",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetPolicyByRoleReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/admin/policy/list": {
+            "post": {
+                "description": "获取策略",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "策略管理"
+                ],
+                "summary": "获取策略",
+                "responses": {
+                    "200": {
+                        "description": "{\"success\":true,\"data\":{},\"msg\":\"获取成功\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/policy/remove": {
             "post": {
                 "description": "删除策略",
@@ -294,6 +351,40 @@ const docTemplate = `{
                         "description": "Internal Server Error",
                         "schema": {
                             "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/order/create": {
+            "post": {
+                "description": "创建订单创建订单",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "订单"
+                ],
+                "summary": "创建订单",
+                "parameters": [
+                    {
+                        "description": "创建订单",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.CreateOrderReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.CreateOrderResp"
                         }
                     }
                 }
@@ -872,6 +963,25 @@ const docTemplate = `{
                 }
             }
         },
+        "request.CreateOrderReq": {
+            "type": "object",
+            "required": [
+                "amount",
+                "pid",
+                "uid"
+            ],
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "pid": {
+                    "type": "integer"
+                },
+                "uid": {
+                    "type": "integer"
+                }
+            }
+        },
         "request.CreateProductReq": {
             "type": "object",
             "required": [
@@ -926,6 +1036,14 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "page_size": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.GetPolicyByRoleReq": {
+            "type": "object",
+            "properties": {
+                "id": {
                     "type": "integer"
                 }
             }
@@ -1009,7 +1127,6 @@ const docTemplate = `{
             "required": [
                 "desc",
                 "id",
-                "img",
                 "name",
                 "price",
                 "status",
@@ -1021,9 +1138,6 @@ const docTemplate = `{
                 },
                 "id": {
                     "type": "integer"
-                },
-                "img": {
-                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -1144,6 +1258,14 @@ const docTemplate = `{
                 },
                 "username": {
                     "type": "string"
+                }
+            }
+        },
+        "response.CreateOrderResp": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
                 }
             }
         },

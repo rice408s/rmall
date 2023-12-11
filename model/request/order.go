@@ -25,3 +25,11 @@ type UpdateOrderReq struct {
 	Pid    int64 `json:"pid" binding:"required"`
 	Amount int   `json:"amount" binding:"required"`
 }
+
+type GetOrderByUidReq struct {
+	Uid int `json:"uid" form:"uid"`
+}
+
+type GetOrderByPidReq struct {
+	Pid int `json:"pid" form:"pid"`
+}

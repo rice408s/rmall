@@ -92,18 +92,6 @@ func UserLogin(c *gin.Context) {
 //	@Param			Authorization	header		string				true	"token"
 //	@Success		200				{object}	response.UserInfo	"获取用户信息成功"
 //	@Router			/user/info [get]
-// func GetUserInfo(c *gin.Context) {
-// 	user, _ := c.Get("user")
-// 	//claims := user.(jwt.MapClaims)
-// 	claims := user.(*jwt.Token).Claims.(jwt.MapClaims)
-// 	c.JSON(http.StatusOK, response.UserInfo{
-// 		Id:       int(claims["id"].(float64)),
-// 		Username: claims["username"].(string),
-// 		Mobile:   claims["mobile"].(string),
-// 		Email:    claims["email"].(string),
-// 	})
-
-// }
 func GetUserInfo(c *gin.Context) {
 	claims, _ := c.Get("user")
 	userClaims := claims.(jwt.MapClaims)

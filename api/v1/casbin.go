@@ -126,14 +126,14 @@ func UpdatePolicy(c *gin.Context) {
 }
 
 // GetPolicyList 获取策略
-// summary		获取策略
-// Description	获取策略
-// Tags			策略管理
-// Accept		json
-// Produce		json
-// Param		request	body		request.GetPolicyReq	true	"获取策略"
-// Success		200		{string}	string					"{"success":true,"data":{},"msg":"获取成功"}"
-// Router		/admin/policy/list [post]
+// @summary		获取策略
+// @Description	获取策略
+// @Tags			策略管理
+// @Accept		json
+// @Produce		json
+// 没有参数
+// @Success		200		{string}	string					"{"success":true,"data":{},"msg":"获取成功"}"
+// @Router		/admin/policy/list [post]
 func GetPolicyList(c *gin.Context) {
 	policy := service.GetPolicy()
 	c.JSON(200, gin.H{
@@ -144,14 +144,14 @@ func GetPolicyList(c *gin.Context) {
 }
 
 // GetPolicyByRole 通过角色获取策略
-// summary		通过角色获取策略
-// Description	通过角色获取策略
-// Tags			策略管理
-// Accept		json
-// Produce		json
-// Param		request	body		request.GetPolicyByRoleReq	true	"通过角色获取策略"
-// Success		200		{string}	string					"{"success":true,"data":{},"msg":"获取成功"}"
-// Router		/admin/policy/getByRole [post]
+// @summary		通过角色获取策略
+// @Description	通过角色获取策略
+// @Tags			策略管理
+// @Accept		json
+// @Produce		json
+// @Param		request	body		request.GetPolicyByRoleReq	true	"通过角色获取策略"
+// @Success		200		{string}	string					"{"success":true,"data":{},"msg":"获取成功"}"
+// @Router		/admin/policy/getByRole [post]
 func GetPolicyByRole(c *gin.Context) {
 	var req request.GetPolicyByRoleReq
 	err := c.ShouldBindJSON(&req)
