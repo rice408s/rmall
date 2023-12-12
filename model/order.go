@@ -17,6 +17,14 @@ import "time"
 //) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 //
 
+const (
+	OrderStatusPending   = 0 // 待支付
+	OrderStatusPaid      = 1 // 已支付
+	OrderStatusCancelled = 2 // 已取消
+	OrderStatusCompleted = 3 // 已完成
+)
+
+
 // Order 订单
 type Order struct {
 	Id         int64     `json:"id" db:"id"`

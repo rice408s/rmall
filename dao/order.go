@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"rmall/global"
 	"rmall/model"
+	"time"
 )
 
 func AddOrder(order *model.Order) (id int, err error) {
@@ -191,4 +192,65 @@ func FindOrderByPid(pid int) (orders []*model.Order, err error) {
 		return nil, err
 	}
 	return orders, nil
+}
+
+// FindOrderTimeout 获取超时未支付的订单
+func FindOrderTimeout() (orders []*model.Order, err error) {
+	queryStr := "select * from `order` where status=0 and create_time<?"
+	orders = []*model.Order{}
+	err = global.DB.Select(&orders, queryStr, time.Now().Add(-time.Minute*30))
+	if err != nil {
+		return nil, err
+	}
+	return orders, nil
+}
+
+// UpdateOrderTimeout 将超时未支付的订单状态设置为已取消，恢复商品库存
+func UpdateOrderTimeout() (err error) {
+	// 开启数据库事务
+	orders, err := FindOrderTimeout()
+	if err != nil {
+		return err
+	}
+
+	tx, err := global.DB.Begin()
+	if err != nil {
+		return err
+	}
+	for _, order := range orders {
+		// 恢复商品库存
+		product, err := FindProductById(int(order.Pid))
+		if err != nil {
+			return tx.Rollback()
+		}
+		product.Stock += order.Amount
+		err = UpdateProduct(product)
+		if err != nil {
+			return tx.Rollback()
+		}
+
+		// 更新订单状态
+		updateStr := "update `order` set status=? where id=?"
+		_, err = tx.Exec(updateStr, model.OrderStatusCancelled, order.Id)
+		if err != nil {
+			return tx.Rollback()
+		}
+
+		// 更新订单缓存
+		key := fmt.Sprintf("orders:id:%d", order.Id)
+		err = global.RedisCli.Del(ctx, key).Err()
+		if err != nil {
+			err := tx.Rollback()
+			if err != nil {
+				return errors.New("回滚失败")
+			}
+			return errors.New("删除订单缓存失败")
+		}
+	}
+	// 提交事务
+	err = tx.Commit()
+	if err != nil {
+		return tx.Rollback()
+	}
+	return nil
 }

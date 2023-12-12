@@ -1,5 +1,22 @@
 basePath: /api/v1
 definitions:
+  model.Order:
+    properties:
+      amount:
+        type: integer
+      create_time:
+        type: string
+      id:
+        type: integer
+      pid:
+        type: integer
+      status:
+        type: integer
+      uid:
+        type: integer
+      update_time:
+        type: string
+    type: object
   model.Product:
     properties:
       create_time:
@@ -118,6 +135,11 @@ definitions:
     - status
     - stock
     type: object
+  request.DeleteOrderReq:
+    properties:
+      id:
+        type: integer
+    type: object
   request.DeleteProductReq:
     properties:
       id:
@@ -131,6 +153,28 @@ definitions:
     - id
     type: object
   request.GetAdminListReq:
+    properties:
+      page_num:
+        type: integer
+      page_size:
+        type: integer
+    type: object
+  request.GetOrderByIdReq:
+    properties:
+      id:
+        type: integer
+    type: object
+  request.GetOrderByPidReq:
+    properties:
+      pid:
+        type: integer
+    type: object
+  request.GetOrderByUidReq:
+    properties:
+      uid:
+        type: integer
+    type: object
+  request.GetOrderListReq:
     properties:
       page_num:
         type: integer
@@ -170,6 +214,22 @@ definitions:
     required:
     - v0
     - v1
+    type: object
+  request.UpdateOrderReq:
+    properties:
+      amount:
+        type: integer
+      id:
+        type: integer
+      pid:
+        type: integer
+      uid:
+        type: integer
+    required:
+    - amount
+    - id
+    - pid
+    - uid
     type: object
   request.UpdatePolicyReq:
     properties:
@@ -295,6 +355,11 @@ definitions:
       id:
         type: integer
     type: object
+  response.DeleteOrderResp:
+    properties:
+      id:
+        type: integer
+    type: object
   response.DeleteProductResp:
     properties:
       id:
@@ -303,6 +368,50 @@ definitions:
   response.DeleteRoleResp:
     properties:
       id:
+        type: integer
+    type: object
+  response.GetOrderByIdResp:
+    properties:
+      amount:
+        type: integer
+      create_time:
+        type: string
+      id:
+        type: integer
+      pid:
+        type: integer
+      status:
+        type: integer
+      uid:
+        type: integer
+      update_time:
+        type: string
+    type: object
+  response.GetOrderByPidResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/model.Order'
+        type: array
+      total:
+        type: integer
+    type: object
+  response.GetOrderByUidResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/model.Order'
+        type: array
+      total:
+        type: integer
+    type: object
+  response.GetOrderListResp:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/model.Order'
+        type: array
+      total:
         type: integer
     type: object
   response.GetProductByIdResp:
@@ -357,6 +466,11 @@ definitions:
       total:
         type: integer
     type: object
+  response.UpdateOrderResp:
+    properties:
+      id:
+        type: integer
+    type: object
   response.UpdateProductResp:
     properties:
       id:
@@ -366,6 +480,17 @@ definitions:
     properties:
       id:
         type: integer
+    type: object
+  response.UserInfo:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      mobile:
+        type: string
+      username:
+        type: string
     type: object
   response.UserLoginResp:
     properties:
@@ -486,6 +611,28 @@ paths:
       summary: 管理员登录
       tags:
       - 管理员
+  /admin/order/getByUid:
+    post:
+      consumes:
+      - application/json
+      description: 通过uid获取订单
+      parameters:
+      - description: 通过uid获取订单
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.GetOrderByUidReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.GetOrderByUidResp'
+      summary: 通过用户获取订单
+      tags:
+      - 订单
   /admin/policy/add:
     post:
       consumes:
@@ -619,7 +766,7 @@ paths:
     post:
       consumes:
       - application/json
-      description: 创建订单创建订单
+      description: 创建订单
       parameters:
       - description: 创建订单
         in: body
@@ -876,6 +1023,26 @@ paths:
       summary: 更新角色
       tags:
       - 角色
+  /user/info:
+    get:
+      consumes:
+      - application/json
+      description: 获取用户信息
+      parameters:
+      - description: token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 获取用户信息成功
+          schema:
+            $ref: '#/definitions/response.UserInfo'
+      tags:
+      - 用户
   /user/login:
     post:
       consumes:
@@ -898,6 +1065,138 @@ paths:
       summary: 用户登录
       tags:
       - 用户
+  /user/order/delete:
+    post:
+      consumes:
+      - application/json
+      description: 删除订单
+      parameters:
+      - description: 删除订单
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.DeleteOrderReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.DeleteOrderResp'
+      summary: 删除订单
+      tags:
+      - 订单
+  /user/order/get:
+    post:
+      consumes:
+      - application/json
+      description: 根据id获取订单
+      parameters:
+      - description: 根据id获取订单
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.GetOrderByIdReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.GetOrderByIdResp'
+      summary: 根据id获取订单
+      tags:
+      - 订单
+  /user/order/getByPid:
+    post:
+      consumes:
+      - application/json
+      description: 通过pid获取订单
+      parameters:
+      - description: 通过pid获取订单
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.GetOrderByPidReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.GetOrderByPidResp'
+      summary: 通过商品获取订单
+      tags:
+      - 订单
+  /user/order/getByUid:
+    post:
+      consumes:
+      - application/json
+      description: 通过uid获取订单
+      parameters:
+      - description: 通过uid获取订单
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.GetOrderByUidReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.GetOrderByUidResp'
+      summary: 通过用户获取订单
+      tags:
+      - 订单
+  /user/order/list:
+    post:
+      consumes:
+      - application/json
+      description: 分页获取订单
+      parameters:
+      - description: 分页获取订单
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.GetOrderListReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.GetOrderListResp'
+      summary: 获取订单列表
+      tags:
+      - 订单
+  /user/order/update:
+    post:
+      consumes:
+      - application/json
+      description: 修改订单
+      parameters:
+      - description: 修改订单
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateOrderReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UpdateOrderResp'
+      summary: 修改订单
+      tags:
+      - 订单
   /user/register:
     post:
       consumes:

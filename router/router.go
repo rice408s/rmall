@@ -40,10 +40,15 @@ func Route() {
 	{
 		userRequired.POST("/info", api.GetUserInfo)
 
-		// 订单相关路由
+		// 用户订单相关路由
 		order := userRequired.Group("/order")
 		{
 			order.POST("/create", api.CreateOrder)
+			order.POST("/update", api.UpdateOrder)
+			order.POST("/get", api.GetOrderById)
+			//order.POST("/list", api.GetOrderList)
+			order.POST("getByUid", api.GetOrderByUid)
+
 		}
 	}
 
@@ -83,6 +88,16 @@ func Route() {
 			product.POST("/add", api.AddProduct)       // 添加产品
 			product.POST("/update", api.UpdateProduct) // 更新产品
 			product.POST("/delete", api.DeleteProduct) // 删除产品
+		}
+		//订单管理员相关路由
+		order := adminRequired.Group("/order")
+		{
+			order.POST("/list", api.GetOrderList)       // 获取订单列表
+			order.POST("/get", api.GetOrderById)        // 获取订单详情
+			order.POST("/update", api.UpdateOrder)      // 更新订单
+			order.POST("/delete", api.DeleteOrder)      // 删除订单
+			order.POST("/listByUid", api.GetOrderByUid) // 获取用户订单列表
+			order.POST("/listByPid", api.GetOrderByPid) // 获取产品订单列表
 		}
 	}
 

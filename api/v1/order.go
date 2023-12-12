@@ -12,7 +12,7 @@ import (
 // CreateOrder 创建订单
 //
 //	@Summary		创建订单
-//	@Description	创建订单创建订单
+//	@Description	创建订单
 //	@Tags			订单
 //	@Accept			json
 //	@Produce		json
@@ -40,7 +40,7 @@ func CreateOrder(c *gin.Context) {
 }
 
 // UpdateOrder 修改订单
-// @Summary UpdateOrder
+// @Summary 修改订单
 // @Description 修改订单
 // @Tags 订单
 // @Accept json
@@ -66,7 +66,7 @@ func UpdateOrder(c *gin.Context) {
 }
 
 // GetOrderById 根据id获取订单
-// @Summary GetOrderById
+// @Summary 根据id获取订单
 // @Description 根据id获取订单
 // @Tags 订单
 // @Accept json
@@ -91,16 +91,16 @@ func GetOrderById(c *gin.Context) {
 	})
 }
 
-// GetOrderByPage 分页获取订单
-// @Summary GetOrderByPage
+// GetOrderList 分页获取订单
+// @Summary 获取订单列表
 // @Description 分页获取订单
 // @Tags 订单
 // @Accept json
 // @Produce json
-// @Param request body request.GetOrderByPageReq true "分页获取订单"
-// @Success 200 {object} response GetOrderByPageResp
-// @Router /user/order/getByPage [post]
-func GetOrderByPage(c *gin.Context) {
+// @Param request body request.GetOrderListReq true "分页获取订单"
+// @Success 200 {object} response.GetOrderListResp
+// @Router /user/order/list [post]
+func GetOrderList(c *gin.Context) {
 	var req request.GetOrderListReq
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
@@ -119,7 +119,7 @@ func GetOrderByPage(c *gin.Context) {
 }
 
 // DeleteOrder 删除订单
-// @Summary DeleteOrder
+// @Summary 删除订单
 // @Description 删除订单
 // @Tags 订单
 // @Accept json
@@ -145,7 +145,7 @@ func DeleteOrder(c *gin.Context) {
 }
 
 // GetOrderByUid 通过uid获取订单
-// @Summary GetOrderByUid
+// @Summary 通过用户获取订单
 // @Description 通过uid获取订单
 // @Tags 订单
 // @Accept json
@@ -153,6 +153,7 @@ func DeleteOrder(c *gin.Context) {
 // @Param request body request.GetOrderByUidReq true "通过uid获取订单"
 // @Success 200 {object} response.GetOrderByUidResp
 // @Router /user/order/getByUid [post]
+// @Router /admin/order/getByUid [post]
 func GetOrderByUid(c *gin.Context) {
 	var req request.GetOrderByUidReq
 	err := c.ShouldBindJSON(&req)
@@ -177,7 +178,7 @@ func GetOrderByUid(c *gin.Context) {
 }
 
 // GetOrderByPid 通过商品获取订单
-// @Summary GetOrderByPid
+// @Summary 通过商品获取订单
 // @Description 通过pid获取订单
 // @Tags 订单
 // @Accept json

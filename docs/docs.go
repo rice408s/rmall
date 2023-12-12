@@ -157,6 +157,40 @@ const docTemplate = `{
                 }
             }
         },
+        "/admin/order/getByUid": {
+            "post": {
+                "description": "通过uid获取订单",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "订单"
+                ],
+                "summary": "通过用户获取订单",
+                "parameters": [
+                    {
+                        "description": "通过uid获取订单",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetOrderByUidReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.GetOrderByUidResp"
+                        }
+                    }
+                }
+            }
+        },
         "/admin/policy/add": {
             "post": {
                 "description": "添加策略",
@@ -358,7 +392,7 @@ const docTemplate = `{
         },
         "/order/create": {
             "post": {
-                "description": "创建订单创建订单",
+                "description": "创建订单",
                 "consumes": [
                     "application/json"
                 ],
@@ -761,6 +795,37 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/info": {
+            "get": {
+                "description": "获取用户信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "用户"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "获取用户信息成功",
+                        "schema": {
+                            "$ref": "#/definitions/response.UserInfo"
+                        }
+                    }
+                }
+            }
+        },
         "/user/login": {
             "post": {
                 "description": "用户登录",
@@ -790,6 +855,210 @@ const docTemplate = `{
                         "description": "登录成功",
                         "schema": {
                             "$ref": "#/definitions/response.UserLoginResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/order/delete": {
+            "post": {
+                "description": "删除订单",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "订单"
+                ],
+                "summary": "删除订单",
+                "parameters": [
+                    {
+                        "description": "删除订单",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DeleteOrderReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.DeleteOrderResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/order/get": {
+            "post": {
+                "description": "根据id获取订单",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "订单"
+                ],
+                "summary": "根据id获取订单",
+                "parameters": [
+                    {
+                        "description": "根据id获取订单",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetOrderByIdReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.GetOrderByIdResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/order/getByPid": {
+            "post": {
+                "description": "通过pid获取订单",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "订单"
+                ],
+                "summary": "通过商品获取订单",
+                "parameters": [
+                    {
+                        "description": "通过pid获取订单",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetOrderByPidReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.GetOrderByPidResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/order/getByUid": {
+            "post": {
+                "description": "通过uid获取订单",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "订单"
+                ],
+                "summary": "通过用户获取订单",
+                "parameters": [
+                    {
+                        "description": "通过uid获取订单",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetOrderByUidReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.GetOrderByUidResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/order/list": {
+            "post": {
+                "description": "分页获取订单",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "订单"
+                ],
+                "summary": "获取订单列表",
+                "parameters": [
+                    {
+                        "description": "分页获取订单",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.GetOrderListReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.GetOrderListResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/order/update": {
+            "post": {
+                "description": "修改订单",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "订单"
+                ],
+                "summary": "修改订单",
+                "parameters": [
+                    {
+                        "description": "修改订单",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UpdateOrderReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.UpdateOrderResp"
                         }
                     }
                 }
@@ -837,6 +1106,32 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "model.Order": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "create_time": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "pid": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "uid": {
+                    "type": "integer"
+                },
+                "update_time": {
+                    "type": "string"
+                }
+            }
+        },
         "model.Product": {
             "type": "object",
             "properties": {
@@ -1010,6 +1305,14 @@ const docTemplate = `{
                 }
             }
         },
+        "request.DeleteOrderReq": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
         "request.DeleteProductReq": {
             "type": "object",
             "properties": {
@@ -1030,6 +1333,41 @@ const docTemplate = `{
             }
         },
         "request.GetAdminListReq": {
+            "type": "object",
+            "properties": {
+                "page_num": {
+                    "type": "integer"
+                },
+                "page_size": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.GetOrderByIdReq": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.GetOrderByPidReq": {
+            "type": "object",
+            "properties": {
+                "pid": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.GetOrderByUidReq": {
+            "type": "object",
+            "properties": {
+                "uid": {
+                    "type": "integer"
+                }
+            }
+        },
+        "request.GetOrderListReq": {
             "type": "object",
             "properties": {
                 "page_num": {
@@ -1090,6 +1428,29 @@ const docTemplate = `{
                 },
                 "v2": {
                     "type": "string"
+                }
+            }
+        },
+        "request.UpdateOrderReq": {
+            "type": "object",
+            "required": [
+                "amount",
+                "id",
+                "pid",
+                "uid"
+            ],
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "pid": {
+                    "type": "integer"
+                },
+                "uid": {
+                    "type": "integer"
                 }
             }
         },
@@ -1277,6 +1638,14 @@ const docTemplate = `{
                 }
             }
         },
+        "response.DeleteOrderResp": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
         "response.DeleteProductResp": {
             "type": "object",
             "properties": {
@@ -1289,6 +1658,74 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.GetOrderByIdResp": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "create_time": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "pid": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "uid": {
+                    "type": "integer"
+                },
+                "update_time": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.GetOrderByPidResp": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Order"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.GetOrderByUidResp": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Order"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.GetOrderListResp": {
+            "type": "object",
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Order"
+                    }
+                },
+                "total": {
                     "type": "integer"
                 }
             }
@@ -1370,6 +1807,14 @@ const docTemplate = `{
                 }
             }
         },
+        "response.UpdateOrderResp": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
         "response.UpdateProductResp": {
             "type": "object",
             "properties": {
@@ -1383,6 +1828,23 @@ const docTemplate = `{
             "properties": {
                 "id": {
                     "type": "integer"
+                }
+            }
+        },
+        "response.UserInfo": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "mobile": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
                 }
             }
         },
