@@ -18,12 +18,11 @@ import "time"
 //
 
 const (
-	OrderStatusPending   = 0 // 待支付
-	OrderStatusPaid      = 1 // 已支付
-	OrderStatusCancelled = 2 // 已取消
-	OrderStatusCompleted = 3 // 已完成
+	OrderStatusPending   = 1 // 待支付
+	OrderStatusPaid      = 2 // 已支付
+	OrderStatusCancelled = 3 // 已取消
+	OrderStatusCompleted = 4 // 已完成
 )
-
 
 // Order 订单
 type Order struct {

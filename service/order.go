@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"rmall/dao"
 	"rmall/global"
 	"rmall/model"
@@ -97,8 +98,10 @@ func UpdateOrder(req *request.UpdateOrderReq) (err error) {
 		Uid:        req.Uid,
 		Pid:        req.Pid,
 		Amount:     req.Amount,
+		Status:     req.Status,
 		UpdateTime: time.Now(),
 	}
+	fmt.Println(order)
 	return dao.UpdateOrder(order)
 }
 

@@ -48,6 +48,7 @@ func CreateOrder(c *gin.Context) {
 // @Param request body request.UpdateOrderReq true "修改订单"
 // @Success 200 {object} response.UpdateOrderResp ""
 // @Router /user/order/update [post]
+// @Router /admin/order/update [post]
 func UpdateOrder(c *gin.Context) {
 	var req request.UpdateOrderReq
 	err := c.ShouldBindJSON(&req)
@@ -162,11 +163,15 @@ func GetOrderByUid(c *gin.Context) {
 		return
 	}
 
-	claims, _ := c.Get("user")
-	userClaims := claims.(jwt.MapClaims)
-	req.Uid = int(userClaims["id"].(float64))
+	claims, exist := c.Get("user")
 
+	userClaims := claims.(jwt.MapClaims)
+	//如果是用户，就使用用户的id，否则使用管理员输入的id
+	if exist {
+		req.Uid = int(userClaims["id"].(float64))
+	}
 	orders, err := service.FindOrderByUid(req.Uid)
+
 	if err != nil {
 		c.JSON(400, err.Error())
 		return

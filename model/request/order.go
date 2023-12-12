@@ -24,6 +24,7 @@ type UpdateOrderReq struct {
 	Uid    int64 `json:"uid" binding:"required"`
 	Pid    int64 `json:"pid" binding:"required"`
 	Amount int   `json:"amount" binding:"required"`
+	Status int   `json:"status" binding:"required"`
 }
 
 type GetOrderByUidReq struct {

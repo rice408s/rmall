@@ -104,8 +104,8 @@ func FindOrderByPage(offset, pageSize int) (orders []*model.Order, err error) {
 
 // UpdateOrder 更新订单
 func UpdateOrder(order *model.Order) (err error) {
-	updateStr := "update `order` set uid=?,pid=?,amount=? where id=?"
-	_, err = global.DB.Exec(updateStr, order.Uid, order.Pid, order.Amount, order.Id)
+	updateStr := "update `order` set uid=?,pid=?,amount=?,status=? where id=?"
+	_, err = global.DB.Exec(updateStr, order.Uid, order.Pid, order.Amount, order.Status, order.Id)
 	if err != nil {
 		return err
 	}
@@ -129,6 +129,11 @@ func DeleteOrder(id int) (err error) {
 	// 查询订单是否存在
 	order, err := FindOrderById(id)
 	if err != nil {
+		return errors.New("订单不存在")
+	}
+
+	//只有待支付的订单才能删除
+	if order.Status != model.OrderStatusPending {
 		return tx.Rollback()
 	}
 
@@ -162,11 +167,16 @@ func DeleteOrder(id int) (err error) {
 		return errors.New("删除订单缓存失败")
 	}
 
+	//更新分页缓存
+	err = DeleteAllOrderPageCache()
+	if err != nil {
+		return tx.Rollback()
+	}
+
 	// 提交事务
 	err = tx.Commit()
 	if err != nil {
 		return tx.Rollback()
-
 	}
 
 	return nil
@@ -196,9 +206,9 @@ func FindOrderByPid(pid int) (orders []*model.Order, err error) {
 
 // FindOrderTimeout 获取超时未支付的订单
 func FindOrderTimeout() (orders []*model.Order, err error) {
-	queryStr := "select * from `order` where status=0 and create_time<?"
+	queryStr := "select * from `order` where status=? and create_time<?"
 	orders = []*model.Order{}
-	err = global.DB.Select(&orders, queryStr, time.Now().Add(-time.Minute*30))
+	err = global.DB.Select(&orders, queryStr, model.OrderStatusPending, time.Now().Add(-time.Minute*30))
 	if err != nil {
 		return nil, err
 	}
@@ -251,6 +261,19 @@ func UpdateOrderTimeout() (err error) {
 	err = tx.Commit()
 	if err != nil {
 		return tx.Rollback()
+	}
+	return nil
+}
+
+// DeleteAllOrderPageCache 删除所有分页缓存
+func DeleteAllOrderPageCache() (err error) {
+	keys, err := global.RedisCli.Keys(ctx, "orders:page:*").Result()
+	if err != nil {
+		return err
+	}
+	err = global.RedisCli.Del(ctx, keys...).Err()
+	if err != nil {
+		return err
 	}
 	return nil
 }
