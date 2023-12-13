@@ -1,5 +1,5 @@
 bbbbb
-222222<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 222222
 =======
 
