@@ -5,6 +5,7 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"rmall/api/v1"
+	"rmall/config"
 	_ "rmall/docs"
 )
 
@@ -20,6 +21,31 @@ func Route() {
 
 	v1 := r.Group("/api/v1")
 
+	v1.GET("/hello", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "hello",
+		})
+	})
+
+	v1.GET("/world", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "world",
+		})
+	})
+
+	v1.GET("/alipay", func(c *gin.Context) {
+
+		err := config.TestAliPay()
+		if err != nil {
+			c.JSON(500, gin.H{
+				"message": err.Error(),
+			})
+			return
+		}
+		c.JSON(200, gin.H{
+			"message": "alipay",
+		})
+	})
 	// 用户相关路由
 	user := v1.Group("/user")
 	{

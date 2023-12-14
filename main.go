@@ -24,7 +24,6 @@ import (
 
 func main() {
 	initialize.Run()
-
 }
 
 func testRedis() {
