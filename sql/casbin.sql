@@ -12,5 +12,5 @@ CREATE TABLE `casbin_rule` (
                                `v5` varchar(100) DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限规则表';
 /*插入操作casbin api的权限规则*/
-INSERT INTO `casbin_rule`(`p_type`, `v0`, `v1`, `v2`) VALUES ('p', 'admin', '/api/v1/casbin', 'POST');
-INSERT INTO `casbin_rule`(`p_type`, `v0`, `v1`, `v2`) VALUES ('p', 'admin', '/api/v1/casbin/list', 'GET');
+# INSERT INTO `casbin_rule`(`p_type`, `v0`, `v1`, `v2`) VALUES ('p', 'admin', '/api/v1/casbin', 'POST');
+# INSERT INTO `casbin_rule`(`p_type`, `v0`, `v1`, `v2`) VALUES ('p', 'admin', '/api/v1/casbin/list', 'GET');
