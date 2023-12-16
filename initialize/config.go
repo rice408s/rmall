@@ -6,8 +6,8 @@ import (
 	"rmall/global"
 )
 
-func loadConfig(path string) {
-	viper.SetConfigFile(path)
+func loadConfig() {
+	viper.SetConfigFile("./config.yaml")
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 	//添加配置文件所在的路径，注意在Linux环境下%GOPATH要替换为$GOPATH

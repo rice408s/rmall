@@ -9,7 +9,7 @@ import (
 	"rmall/global"
 )
 
-func mysql() {
+func initMysql() {
 	//拼接dsn
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?%s",
 		global.Config.Mysql.Username,

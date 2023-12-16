@@ -5,10 +5,11 @@ import (
 )
 
 func Run() {
-	loadConfig("./config.yaml")
-	mysql()
+	loadConfig()
+	initMysql()
 	initRedis()
 	initCasbin()
+	initAliPay()
 	timedTask()
 	router.Route()
 }

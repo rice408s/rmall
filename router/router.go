@@ -5,8 +5,8 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"rmall/api/v1"
-	"rmall/config"
 	_ "rmall/docs"
+	"rmall/middleware"
 )
 
 func Route() {
@@ -15,37 +15,20 @@ func Route() {
 	//r.Use(utils.RecoverMiddleware())
 
 	r := gin.Default()
-
+	r.Use(middleware.Cors())
 	// Swagger文档路由
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	v1 := r.Group("/api/v1")
 
-	v1.GET("/hello", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "hello",
-		})
-	})
+	pay := v1.Group("/pay")
+	{
+		pay.POST("/hello", api.Hello)
+		pay.GET("/testPay", api.Pay)
+		pay.POST("/callback", api.Callback)
+		pay.POST("/notify", api.Notify)
+	}
 
-	v1.GET("/world", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "world",
-		})
-	})
-
-	v1.GET("/alipay", func(c *gin.Context) {
-
-		err := config.TestAliPay()
-		if err != nil {
-			c.JSON(500, gin.H{
-				"message": err.Error(),
-			})
-			return
-		}
-		c.JSON(200, gin.H{
-			"message": "alipay",
-		})
-	})
 	// 用户相关路由
 	user := v1.Group("/user")
 	{
@@ -62,7 +45,7 @@ func Route() {
 
 	// 需要token验证的用户路由
 	userRequired := v1.Group("/user")
-	userRequired.Use(api.UserAuthRequired())
+	userRequired.Use(middleware.UserAuthRequired())
 	{
 		userRequired.POST("/info", api.GetUserInfo)
 
@@ -80,7 +63,7 @@ func Route() {
 
 	// 需要token验证的管理员路由
 	adminRequired := v1.Group("/admin")
-	adminRequired.Use(api.AdminAuthRequired(), api.CasbinMiddleware())
+	adminRequired.Use(middleware.AdminAuthRequired(), middleware.CasbinMiddleware())
 	{
 		adminRequired.POST("/info", api.GetAdminInfo) // 管理员信息
 		adminRequired.POST("/list", api.GetAdminList) // 管理员列表

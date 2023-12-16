@@ -25,8 +25,3 @@ import (
 func main() {
 	initialize.Run()
 }
-
-func testRedis() {
-	//ctx := redis.co
-
-}
