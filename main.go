@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "net/http/pprof"
 	_ "rmall/docs"
 	"rmall/initialize"
 )
@@ -23,5 +24,6 @@ import (
 //	@securityDefinitions.basic	BasicAuth
 
 func main() {
+
 	initialize.Run()
 }

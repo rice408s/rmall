@@ -39,6 +39,7 @@ func UserAuthRequired() gin.HandlerFunc {
 	}
 }
 
+// AdminAuthRequired token验证中间件
 func AdminAuthRequired() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenString := c.GetHeader("Authorization")
@@ -67,6 +68,7 @@ func AdminAuthRequired() gin.HandlerFunc {
 	}
 }
 
+// CasbinMiddleware 权限中间件
 func CasbinMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 获取请求的URI和方法

@@ -10,18 +10,22 @@ import (
 	"rmall/global"
 )
 
-var kServerDomain = "127.0.0.1"
+var kServerDomain = "http://127.0.0.1:8080/api/v1/pay"
 
 func Pay(c *gin.Context) {
 	var tradeNo = fmt.Sprintf("%d", xid.Next())
 	var p = alipay.TradePagePay{}
-	p.NotifyURL = kServerDomain + "/alipay/notify"
-	p.ReturnURL = kServerDomain + "/alipay/callback"
+	p.NotifyURL = kServerDomain + "/notify"
+	//p.ReturnURL = kServerDomain + "/callback"
+	//p.NotifyURL = "http://rice408.cn"
+	p.ReturnURL = kServerDomain + "/callback"
+	log.Println(p.NotifyURL)
+	log.Println(p.ReturnURL)
+
 	p.Subject = "支付测试:" + tradeNo
 	p.OutTradeNo = tradeNo
-	p.TotalAmount = "660000.00"
+	p.TotalAmount = "66.00"
 	p.ProductCode = "FAST_INSTANT_TRADE_PAY"
-
 	//fmt.Println(p)
 
 	//fmt.Println(client.appId)
@@ -49,6 +53,8 @@ func Callback(c *gin.Context) {
 		})
 		return
 	}
+	fmt.Println("callback")
+	fmt.Println(c.Request.Form)
 
 	if err := global.AliPayClient.VerifySign(c.Request.Form); err != nil {
 		log.Println("回调验证签名发生错误", err)
@@ -74,6 +80,8 @@ func Callback(c *gin.Context) {
 		return
 	}
 
+	fmt.Println(rsp)
+
 	c.String(http.StatusOK, fmt.Sprintf("订单 %s 支付成功", outTradeNo))
 }
 
@@ -83,6 +91,8 @@ func Notify(c *gin.Context) {
 		log.Println("解析异步通知发生错误", err)
 		return
 	}
+	fmt.Println("notify")
+	fmt.Println(c.Request.Form)
 
 	notification, err := global.AliPayClient.DecodeNotification(c.Request.Form)
 	if err != nil {

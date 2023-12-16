@@ -25,7 +25,7 @@ func Route() {
 	{
 		pay.POST("/hello", api.Hello)
 		pay.GET("/testPay", api.Pay)
-		pay.POST("/callback", api.Callback)
+		pay.GET("/callback", api.Callback)
 		pay.POST("/notify", api.Notify)
 	}
 
