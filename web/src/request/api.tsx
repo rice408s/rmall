@@ -32,15 +32,14 @@ async function getDataFromServer (apiUrl: any, configObj: any): Promise<unknown>
       notification.success({
         key,
         message: '登录成功',
-        description: '大师傅士大夫撒地方'
+        description: '欢迎回来'
       })
-      console.log(response)
       resolve(response)
     }).catch(function (error) {
       notification.error({
         key,
-        message: '操作失败',
-        description: '网络异常,请稍后重试'
+        message: '密码或用户名错误',
+        description: '请重新输入'
       })
       reject(error)
     })

@@ -1,36 +1,37 @@
 import '@/pages/login/login.module.scss'
 import React from 'react'
 import {
-  AlipayCircleOutlined,
   LockOutlined,
-  TaobaoCircleOutlined,
-  UserOutlined,
-  WeiboCircleOutlined
+  UserOutlined
 } from '@ant-design/icons'
 import {
   LoginForm,
   ProConfigProvider,
-  ProFormText,
-  setAlpha
+  ProFormText
 } from '@ant-design/pro-components'
-import { Space, Tabs, theme, Button } from 'antd'
-import type { CSSProperties } from 'react'
+import { Tabs, theme, Button } from 'antd'
+// import type { CSSProperties } from 'react'
 import styles from './login.module.scss'
 import { useNavigate } from 'react-router-dom'
+import { adminLoginApi } from '@/request/api'
+import _ from 'lodash'
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default function Login () {
   const navigate = useNavigate()
   const { token } = theme.useToken()
-  const iconStyles: CSSProperties = {
-    marginInlineStart: '16px',
-    color: setAlpha(token.colorTextBase, 0.2),
-    fontSize: '24px',
-    verticalAlign: 'middle',
-    cursor: 'pointer'
-  }
+
+  // 创建防抖函数
+  const debouncedLogin = _.debounce(async (values) => {
+    console.log(values)
+    void adminLoginApi({
+      data: values
+    }).then((res: any) => {
+      console.log(res)
+    })
+  }, 1000) // 延迟1秒
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', marginTop: '15vh' }}>
         <div className={styles.Logincontent}>
          <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
           <Button
@@ -50,17 +51,19 @@ export default function Login () {
           <ProConfigProvider hashed={false}>
             <div style={{ backgroundColor: token.colorBgContainer }}>
               <LoginForm
+              onFinish={async (values) => {
+                void debouncedLogin(values)
+              }}
                 // logo="https://pic.imgdb.cn/item/657d3b79c458853aefcfaebf.png"
-                title="宏伟商城"
-                subTitle="全球最大的商城平台"
-                actions={
-                  <Space>
-                    其他登录方式
-                    <AlipayCircleOutlined style={iconStyles} />
-                    <TaobaoCircleOutlined style={iconStyles} />
-                    <WeiboCircleOutlined style={iconStyles} />
-                  </Space>
-                }
+                title="管理员登录入口"
+                // actions={
+                //   <Space>
+                //     其他登录方式
+                //     <AlipayCircleOutlined style={iconStyles} />
+                //     <TaobaoCircleOutlined style={iconStyles} />
+                //     <WeiboCircleOutlined style={iconStyles} />
+                //   </Space>
+                // }
               >
                 <Tabs centered activeKey={'account'}>
                   <Tabs.TabPane key={'account'} tab={'账号密码登录'} />
@@ -139,7 +142,7 @@ export default function Login () {
                       float: 'left'
                     }}
                   >
-                    注册
+                    管理员注册
                   </a>
                   <a
                     style={{
