@@ -1,10 +1,11 @@
-import Comp1 from "@/components/comp1/comp1"
-function App() {
+import Router from './router/router'
+import React from 'react'
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+function App () {
   return (
     <div>
-      <Comp1></Comp1>
+      <Router></Router>
     </div>
   )
 }
-
 export default App
