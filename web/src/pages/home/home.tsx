@@ -1,9 +1,23 @@
-import React from 'react'
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export default function Home () {
-  return (
-    <div>
-      Home
-    </div>
-  )
+import { Button } from "antd";
+import { useNavigate } from "react-router-dom";
+export default function Home() {
+	const navigate = useNavigate();
+	return (
+		<div>
+			<Button
+				onClick={() => {
+					navigate("/login");
+				}}
+			>
+				管理员登录入口
+			</Button>
+			<Button
+				onClick={() => {
+					navigate("/foregroundlogin");
+				}}
+			>
+				用户登录入口
+			</Button>
+		</div>
+	);
 }
