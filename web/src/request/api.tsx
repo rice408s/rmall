@@ -11,7 +11,7 @@ const key = "keepOnlyOne";
  */
 async function getDataFromServer(apiUrl: any, configObj: any): Promise<unknown> {
 	// 用户传入的接口配置参数 （默认）
-	const { method = "POST", params = {}, data = {}, timeout = 10000, headers = {} } = configObj;
+	const { method = "POST", params = {}, data = {}, timeout = 100, headers = {} } = configObj;
 	return await new Promise(function (resolve, reject) {
 		axios({
 			url: apiUrl,
@@ -26,16 +26,14 @@ async function getDataFromServer(apiUrl: any, configObj: any): Promise<unknown> 
 			.then(function (response) {
 				notification.success({
 					key,
-					message: "登录成功",
-					description: "欢迎回来"
+					message: "成功"
 				});
 				resolve(response);
 			})
 			.catch(function (error) {
 				notification.error({
 					key,
-					message: "密码或用户名错误",
-					description: "请重新输入"
+					message: "错误"
 				});
 				reject(error);
 			});

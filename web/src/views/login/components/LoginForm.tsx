@@ -49,21 +49,21 @@ const LoginForm = (props: any) => {
 			autoComplete="off"
 		>
 			<Form.Item name="username" rules={[{ required: true, message: "请输入用户名" }]}>
-				<Input placeholder="用户名：admin / user" prefix={<UserOutlined />} />
+				<Input placeholder="用户名：admin / user" prefix={<UserOutlined rev={undefined} />} />
 			</Form.Item>
 			<Form.Item name="password" rules={[{ required: true, message: "请输入密码" }]}>
-				<Input.Password autoComplete="new-password" placeholder="密码：123456" prefix={<LockOutlined />} />
+				<Input.Password autoComplete="new-password" placeholder="密码：123456" prefix={<LockOutlined rev={undefined} />} />
 			</Form.Item>
 			<Form.Item className="login-btn">
 				<Button
 					onClick={() => {
 						form.resetFields();
 					}}
-					icon={<CloseCircleOutlined />}
+					icon={<CloseCircleOutlined rev={undefined} />}
 				>
 					{t("login.reset")}
 				</Button>
-				<Button type="primary" htmlType="submit" loading={loading} icon={<UserOutlined />}>
+				<Button type="primary" htmlType="submit" loading={loading} icon={<UserOutlined rev={undefined} />}>
 					{t("login.confirm")}
 				</Button>
 			</Form.Item>

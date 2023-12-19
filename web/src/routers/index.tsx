@@ -8,17 +8,15 @@ const metaRouters = import.meta.globEager("./modules/*.tsx");
 
 // * 处理路由
 export const routerArray: RouteObject[] = [];
-
 Object.keys(metaRouters).forEach(item => {
 	Object.keys(metaRouters[item]).forEach((key: any) => {
 		routerArray.push(...metaRouters[item][key]);
 	});
 });
-
 export const rootRouter: RouteObject[] = [
 	{
 		path: "/",
-		element: <Navigate to="/login" />
+		element: <Navigate to="/homemain" />
 	},
 	{
 		path: "/login",

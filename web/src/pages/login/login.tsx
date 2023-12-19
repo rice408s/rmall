@@ -3,6 +3,7 @@ import React from "react";
 // import type { CSSProperties } from 'react'
 import { useNavigate } from "react-router-dom";
 import { adminLoginApi } from "@/request/api";
+import { notification } from "antd";
 import _ from "lodash";
 import { AlipayOutlined, LockOutlined, MobileOutlined, TaobaoOutlined, UserOutlined, WeiboOutlined } from "@ant-design/icons";
 import { LoginFormPage, ProConfigProvider, ProFormCaptcha, ProFormCheckbox, ProFormText } from "@ant-design/pro-components";
@@ -25,10 +26,22 @@ export default function Foregroundlogin() {
 		console.log(values);
 		void adminLoginApi({
 			data: values
-		}).then((res: any) => {
-			console.log(res);
-		});
-	}, 1000); // 延迟1秒
+		})
+			.then((res: any) => {
+				console.log(res);
+				notification.success({
+					message: "登录成功",
+					description: "欢迎回来"
+				});
+			})
+			.catch((err: any) => {
+				console.log(err);
+				notification.error({
+					message: "密码或用户名错误",
+					description: "请重新输入"
+				});
+			});
+	}, 1000);
 	return (
 		<div
 			style={{
@@ -78,6 +91,7 @@ export default function Foregroundlogin() {
 											}
 										}
 										className={"prefixIcon"}
+										rev={undefined}
 									/>
 								)
 							}}
@@ -101,6 +115,7 @@ export default function Foregroundlogin() {
 											}
 										}
 										className={"prefixIcon"}
+										rev={undefined}
 									/>
 								)
 							}}
@@ -127,6 +142,7 @@ export default function Foregroundlogin() {
 											}
 										}
 										className={"prefixIcon"}
+										rev={undefined}
 									/>
 								)
 							}}
@@ -154,6 +170,7 @@ export default function Foregroundlogin() {
 											}
 										}
 										className={"prefixIcon"}
+										rev={undefined}
 									/>
 								)
 							}}

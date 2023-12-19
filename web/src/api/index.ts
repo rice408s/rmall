@@ -8,9 +8,7 @@ import { AxiosCanceler } from "./helper/axiosCancel";
 import { setToken } from "@/redux/modules/global/action";
 import { message } from "antd";
 import { store } from "@/redux";
-
 const axiosCanceler = new AxiosCanceler();
-
 const config = {
 	// 默认地址请求地址，可在 .env 开头文件中修改
 	baseURL: import.meta.env.VITE_API_URL as string,
@@ -86,7 +84,6 @@ class RequestHttp {
 			}
 		);
 	}
-
 	// * 常用请求方法封装
 	get<T>(url: string, params?: object, _object = {}): Promise<ResultData<T>> {
 		return this.service.get(url, { params, ..._object });
