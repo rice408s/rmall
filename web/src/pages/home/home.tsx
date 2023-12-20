@@ -1,23 +1,24 @@
-import { Button } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Button } from 'antd'
+import { useNavigate } from 'react-router-dom'
+import React from 'react'
 export default function Home() {
-	const navigate = useNavigate();
-	return (
-		<div>
-			<Button
-				onClick={() => {
-					navigate("/login");
-				}}
-			>
+  const navigate = useNavigate()
+  return (
+    <div>
+      <Button
+        onClick={() => {
+          navigate('/backstagelogin')
+        }}
+      >
 				管理员登录入口
-			</Button>
-			<Button
-				onClick={() => {
-					navigate("/foregroundlogin");
-				}}
-			>
+      </Button>
+      <Button
+        onClick={() => {
+          navigate('/foregroundlogin')
+        }}
+      >
 				用户登录入口
-			</Button>
-		</div>
-	);
+      </Button>
+    </div>
+  )
 }
