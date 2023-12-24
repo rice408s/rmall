@@ -1,0 +1,16 @@
+.demo-logo-vertical{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh; 
+    font-size: 1.5rem ;
+    font-weight: 500;
+    color: #fff;
+}
+.welcome-message:hover{
+    cursor: pointer;
+}
+.welcome-message{
+    float: right;  position: absolute;
+    right: 10vh;
+}

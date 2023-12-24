@@ -1,0 +1,33 @@
+.Backstageloginleft {
+    width: 50vw;
+    height: 100%;
+    background-color: #eae8ea;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+    background: url('https://pic.imgdb.cn/item/65879e3fc458853aef740537.jpg') no-repeat;
+    background-size: cover;
+
+    @media (max-width: 768px) {
+        width: 100%;
+        border-radius: 0;
+    }
+}
+.Backstageloginright {
+    width: 30vw;
+    height: 100%;
+    background-color: #fff;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+    @media (max-width: 768px) {
+        width: 100%;
+        border-radius: 0;
+    }
+}
+.ant-pro-form-login-container{
+    height: 80vh;
+    box-sizing: border-box;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding-top: 12vh;
+}

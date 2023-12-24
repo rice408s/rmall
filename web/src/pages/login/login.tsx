@@ -22,7 +22,6 @@ const iconStyles: CSSProperties = {
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const Foregroundlogin: React.FC = () => {
   const [loginType, setLoginType] = useState<LoginType>('account')
-  const navigate = useNavigate()
   // 创建防抖函数
   const debouncedLogin = _.debounce(async(values: never) => {
     console.log(values)
@@ -114,7 +113,7 @@ export const Foregroundlogin: React.FC = () => {
                       />
                     )
                   }}
-                  placeholder={'用户名: admin or user'}
+                  placeholder={'请输入用户名'}
                   rules={[
                     {
                       required: true,
@@ -138,7 +137,7 @@ export const Foregroundlogin: React.FC = () => {
                       />
                     )
                   }}
-                  placeholder={'密码: ant.design'}
+                  placeholder={'请输入密码！'}
                   rules={[
                     {
                       required: true,
@@ -222,7 +221,7 @@ export const Foregroundlogin: React.FC = () => {
               }}
             >
               <ProFormCheckbox noStyle name='autoLogin'>
-						自动登录
+              记住密码
               </ProFormCheckbox>
               <a
                 style={{

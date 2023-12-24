@@ -7,7 +7,7 @@ export default function Home() {
     <div>
       <Button
         onClick={() => {
-          navigate('/backstagelogin')
+          navigate('/backstage/login')
         }}
       >
 				管理员登录入口
