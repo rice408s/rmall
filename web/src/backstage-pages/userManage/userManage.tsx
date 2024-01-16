@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Space, Table, Tag } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
 import { DataType } from './interface/index'
@@ -74,6 +74,9 @@ export default function UserManage() {
       tags: ['cool', 'teacher']
     }
   ]
+  useEffect(() => {
+
+  }, [])
   return (
     <div>
       <Table columns={columns} dataSource={data} pagination={{ pageSize: 5 }}/>

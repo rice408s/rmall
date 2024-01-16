@@ -71,7 +71,6 @@ export default function Backstagelogin() {
           <div className='Backstageloginright'>
 
             <LoginForm
-              logo='https://github.githubassets.com/images/modules/logos_page/Octocat.png'
               title='管理员登录'
               subTitle='全球最大的商城平台'
               onFinish={(values:never) => {
@@ -137,7 +136,6 @@ export default function Backstagelogin() {
                 </a>
               </div>
             </LoginForm>
-
           </div>
         </div>
       </Spin>

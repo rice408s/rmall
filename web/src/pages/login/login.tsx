@@ -7,20 +7,21 @@ import { useNavigate } from 'react-router-dom'
 import { adminLoginApi } from '../../request/api'
 import { notification } from 'antd'
 import _ from 'lodash'
-import { AlipayOutlined, LockOutlined, MobileOutlined, TaobaoOutlined, UserOutlined, WeiboOutlined } from '@ant-design/icons'
-import { LoginFormPage, ProConfigProvider, ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-components'
-import { Button, Divider, Space, Tabs, message, theme, Spin, ConfigProvider } from 'antd'
-import type { CSSProperties } from 'react'
+import { LockOutlined, MobileOutlined, UserOutlined, ArrowLeftOutlined } from '@ant-design/icons'
+import { LoginFormPage, ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-components'
+import { Tabs, message, Spin, ConfigProvider, FloatButton } from 'antd'
+// import type { CSSProperties } from 'react'
 import { useState } from 'react'
 type LoginType = 'phone' | 'account';
-const iconStyles: CSSProperties = {
-  color: 'rgba(0, 0, 0, 0.2)',
-  fontSize: '18px',
-  verticalAlign: 'middle',
-  cursor: 'pointer'
-}
+// const iconStyles: CSSProperties = {
+//   color: 'rgba(0, 0, 0, 0.2)',
+//   fontSize: '18px',
+//   verticalAlign: 'middle',
+//   cursor: 'pointer'
+// }
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const Foregroundlogin: React.FC = () => {
+  const navigate = useNavigate()
   const [loginType, setLoginType] = useState<LoginType>('account')
   // 创建防抖函数
   const debouncedLogin = _.debounce(async(values: never) => {
@@ -48,7 +49,7 @@ export const Foregroundlogin: React.FC = () => {
   const img = new Image()
   useEffect(() => {
     img.src = 'https://pic.imgdb.cn/item/658189fdc458853aef694884.jpg'
-    img.onload = () => setIsImageLoaded(true)
+    img.onload = () => setIsImageLoaded(true)// 当图片加载成功时设置setIsImageLoaded(true)
   }, [])
   return (
     <div
@@ -57,6 +58,16 @@ export const Foregroundlogin: React.FC = () => {
         height: '100vh'
       }}
     >
+      <FloatButton
+        icon={<ArrowLeftOutlined />}
+        shape='square'
+        tooltip='返回首页'
+        onClick={() => {
+          navigate('/home')
+        }}
+        style={{ left: 44, bottom: 625, zIndex: 999, opacity: 0.5 }}
+      />
+
       <ConfigProvider
         theme={{
           token: {
@@ -66,10 +77,11 @@ export const Foregroundlogin: React.FC = () => {
       >
         <Spin spinning={!isImageLoaded}
         >
+
           <LoginFormPage
             style={{ height: '100vh' }}
             backgroundImageUrl='https://pic.imgdb.cn/item/658189fdc458853aef694884.jpg'
-            logo='https://pic.imgdb.cn/item/657d3b79c458853aefcfaebf.png'
+            // logo='../../assets/Nut.svg'
             // backgroundVideoUrl="https://gw.alipayobjects.com/v/huamei_gcee1x/afts/video/jXRBRK_VAwoAAAAAAAAAAAAAK4eUAQBr"
             title='宏伟商城'
             onFinish={(values: never) => {
@@ -220,9 +232,16 @@ export const Foregroundlogin: React.FC = () => {
                 marginBlockEnd: 24
               }}
             >
-              <ProFormCheckbox noStyle name='autoLogin'>
-              记住密码
-              </ProFormCheckbox>
+              <a
+                style={{
+                  float: 'left'
+                }}
+                onClick={() => {
+                  navigate('/register')
+                }}
+              >
+						注册账号
+              </a>
               <a
                 style={{
                   float: 'right'
@@ -232,7 +251,6 @@ export const Foregroundlogin: React.FC = () => {
               </a>
             </div>
           </LoginFormPage>
-
         </Spin>
 
       </ConfigProvider>
